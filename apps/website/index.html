@@ -1,0 +1,1930 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Rumper membantu pembeli rumah pertama memeriksa risiko lokasi sebelum membayar booking fee atau DP."
+    />
+    <title>Rumper — Audit Risiko Lokasi Rumah</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Fraunces:opsz,wght@9..144,600;9..144,700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #102c3b;
+        --ink-soft: #3d5662;
+        --paper: #f4f0e6;
+        --paper-deep: #eae4d7;
+        --white: #fffdf8;
+        --teal: #087a6a;
+        --teal-dark: #055d52;
+        --teal-soft: #dcefe9;
+        --amber: #f0b84b;
+        --red: #c75343;
+        --green: #2a8064;
+        --line: rgba(16, 44, 59, 0.16);
+        --shadow: 0 24px 70px rgba(16, 44, 59, 0.12);
+        --radius: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 80% 5%, rgba(8, 122, 106, 0.12), transparent 23rem),
+          var(--paper);
+        font-family: "DM Sans", sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      body::before {
+        position: fixed;
+        z-index: -1;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+        content: "";
+        pointer-events: none;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      button,
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :focus-visible {
+        outline: 3px solid var(--amber);
+        outline-offset: 4px;
+      }
+
+      .skip-link {
+        position: fixed;
+        z-index: 100;
+        top: 8px;
+        left: 8px;
+        padding: 10px 14px;
+        transform: translateY(-140%);
+        background: var(--white);
+        border-radius: 8px;
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
+      .shell {
+        width: min(1180px, calc(100% - 40px));
+        margin-inline: auto;
+      }
+
+      .nav-wrap {
+        position: sticky;
+        z-index: 50;
+        top: 0;
+        padding: 12px 0;
+        backdrop-filter: blur(16px);
+        background: rgba(244, 240, 230, 0.82);
+        border-bottom: 1px solid rgba(16, 44, 59, 0.08);
+      }
+
+      nav,
+      .nav-links,
+      .nav-actions {
+        display: flex;
+        align-items: center;
+      }
+
+      nav {
+        justify-content: space-between;
+        min-height: 52px;
+      }
+
+      .brand {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        color: var(--ink);
+        font-family: "Fraunces", serif;
+        font-size: 25px;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        text-decoration: none;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border-radius: 50% 50% 50% 8px;
+        color: var(--white);
+        background: var(--ink);
+        transform: rotate(-8deg);
+      }
+
+      .brand-mark svg {
+        width: 18px;
+        transform: rotate(8deg);
+      }
+
+      .nav-links {
+        gap: 28px;
+      }
+
+      .nav-links a {
+        color: var(--ink-soft);
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .nav-links a:hover {
+        color: var(--teal);
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 48px;
+        padding: 0 20px;
+        gap: 9px;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: 180ms ease-out;
+        cursor: pointer;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+      }
+
+      .button-primary {
+        color: var(--white);
+        background: var(--teal);
+        box-shadow: 0 10px 24px rgba(8, 122, 106, 0.22);
+      }
+
+      .button-primary:hover {
+        background: var(--teal-dark);
+      }
+
+      .button-secondary {
+        color: var(--ink);
+        border-color: var(--line);
+        background: rgba(255, 253, 248, 0.6);
+      }
+
+      .button-secondary:hover {
+        background: var(--white);
+      }
+
+      .button svg {
+        width: 16px;
+      }
+
+      .mobile-menu-button {
+        display: none;
+        width: 48px;
+        height: 48px;
+        padding: 0;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        color: var(--ink);
+        background: var(--white);
+      }
+
+      .hero {
+        position: relative;
+        min-height: 730px;
+        padding: 96px 0 90px;
+        overflow: hidden;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.02fr) minmax(420px, 0.98fr);
+        gap: 70px;
+        align-items: center;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        padding: 7px 12px;
+        gap: 8px;
+        align-items: center;
+        border: 1px solid rgba(8, 122, 106, 0.22);
+        border-radius: 999px;
+        color: var(--teal-dark);
+        background: rgba(220, 239, 233, 0.62);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--teal);
+        box-shadow: 0 0 0 5px rgba(8, 122, 106, 0.1);
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin-top: 0;
+      }
+
+      h1,
+      h2 {
+        font-family: "Fraunces", serif;
+        letter-spacing: -0.055em;
+        line-height: 1.03;
+      }
+
+      h1 {
+        max-width: 760px;
+        margin: 28px 0 24px;
+        font-size: clamp(54px, 6.6vw, 88px);
+      }
+
+      .hero-copy > p {
+        max-width: 630px;
+        margin: 0;
+        color: var(--ink-soft);
+        font-size: 18px;
+      }
+
+      .hero-actions {
+        display: flex;
+        margin-top: 34px;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .trust-list {
+        display: flex;
+        margin: 38px 0 0;
+        padding: 0;
+        gap: 24px;
+        flex-wrap: wrap;
+        list-style: none;
+      }
+
+      .trust-list li {
+        display: flex;
+        max-width: 170px;
+        gap: 8px;
+        align-items: flex-start;
+        color: var(--ink-soft);
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.4;
+      }
+
+      .trust-list svg {
+        width: 17px;
+        min-width: 17px;
+        color: var(--teal);
+      }
+
+      .report-stage {
+        position: relative;
+        min-height: 530px;
+      }
+
+      .map-orbit {
+        position: absolute;
+        top: 26px;
+        right: -95px;
+        width: 430px;
+        height: 430px;
+        border: 1px dashed rgba(8, 122, 106, 0.28);
+        border-radius: 50%;
+      }
+
+      .map-orbit::before,
+      .map-orbit::after {
+        position: absolute;
+        border: 1px solid rgba(8, 122, 106, 0.15);
+        border-radius: 50%;
+        content: "";
+      }
+
+      .map-orbit::before {
+        inset: 48px;
+      }
+
+      .map-orbit::after {
+        inset: 106px;
+      }
+
+      .report-paper {
+        position: absolute;
+        overflow: hidden;
+        border: 1px solid rgba(16, 44, 59, 0.12);
+        border-radius: 20px;
+        background: var(--white);
+        box-shadow: var(--shadow);
+      }
+
+      .report-main {
+        z-index: 3;
+        top: 28px;
+        left: 10px;
+        width: 380px;
+        padding: 28px;
+        transform: rotate(-2deg);
+        animation: rise 700ms 120ms both ease-out;
+      }
+
+      .report-back {
+        z-index: 1;
+        right: 4px;
+        bottom: 28px;
+        width: 330px;
+        height: 400px;
+        padding: 24px;
+        transform: rotate(5deg);
+        background:
+          linear-gradient(rgba(8, 122, 106, 0.11), rgba(8, 122, 106, 0.11)),
+          repeating-linear-gradient(18deg, transparent 0 17px, rgba(8, 122, 106, 0.09) 18px 19px),
+          var(--white);
+        animation: rise 700ms 220ms both ease-out;
+      }
+
+      .report-kicker {
+        display: flex;
+        justify-content: space-between;
+        color: var(--ink-soft);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+
+      .score-row {
+        display: flex;
+        margin: 24px 0;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+
+      .score-number {
+        font-family: "Fraunces", serif;
+        font-size: 74px;
+        font-weight: 700;
+        letter-spacing: -0.08em;
+        line-height: 0.8;
+      }
+
+      .score-number span {
+        color: var(--ink-soft);
+        font-family: "DM Sans", sans-serif;
+        font-size: 12px;
+        letter-spacing: 0;
+      }
+
+      .status {
+        display: inline-flex;
+        padding: 6px 10px;
+        gap: 6px;
+        align-items: center;
+        border-radius: 999px;
+        color: #7d5310;
+        background: #fff0c9;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .status::before {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--amber);
+        content: "";
+      }
+
+      .score-line {
+        height: 7px;
+        margin-bottom: 24px;
+        overflow: hidden;
+        border-radius: 99px;
+        background: var(--paper-deep);
+      }
+
+      .score-line span {
+        display: block;
+        width: 68%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--teal), var(--amber));
+      }
+
+      .risk-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        padding: 13px 0;
+        gap: 16px;
+        border-top: 1px solid var(--line);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .risk-row span:last-child {
+        color: var(--ink-soft);
+        font-size: 11px;
+      }
+
+      .confidence-note {
+        display: flex;
+        margin-top: 22px;
+        padding: 13px;
+        gap: 10px;
+        align-items: center;
+        border-radius: 10px;
+        color: var(--teal-dark);
+        background: var(--teal-soft);
+        font-size: 10px;
+        font-weight: 700;
+      }
+
+      .pin {
+        position: absolute;
+        z-index: 5;
+        display: grid;
+        width: 46px;
+        height: 46px;
+        place-items: center;
+        border: 6px solid var(--white);
+        border-radius: 50% 50% 50% 8px;
+        color: var(--white);
+        background: var(--red);
+        box-shadow: 0 12px 24px rgba(16, 44, 59, 0.18);
+        transform: rotate(-45deg);
+      }
+
+      .pin svg {
+        width: 17px;
+        transform: rotate(45deg);
+      }
+
+      .pin-one {
+        top: 2px;
+        right: 38px;
+      }
+
+      .pin-two {
+        right: 4px;
+        bottom: 110px;
+        width: 38px;
+        height: 38px;
+        background: var(--teal);
+      }
+
+      .section {
+        padding: 110px 0;
+      }
+
+      .section-dark {
+        color: var(--white);
+        background: var(--ink);
+      }
+
+      .section-head {
+        display: grid;
+        grid-template-columns: 0.65fr 1.35fr;
+        margin-bottom: 60px;
+        gap: 70px;
+      }
+
+      .section-index {
+        color: var(--teal);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .section-dark .section-index {
+        color: #77c7b5;
+      }
+
+      h2 {
+        max-width: 790px;
+        margin-bottom: 18px;
+        font-size: clamp(42px, 5vw, 66px);
+      }
+
+      .section-intro {
+        max-width: 650px;
+        margin: 0;
+        color: var(--ink-soft);
+        font-size: 17px;
+      }
+
+      .section-dark .section-intro {
+        color: rgba(255, 253, 248, 0.68);
+      }
+
+      .risk-ledger {
+        border-top: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .risk-item {
+        display: grid;
+        grid-template-columns: 72px 1fr 1fr auto;
+        padding: 26px 0;
+        gap: 26px;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .risk-icon {
+        display: grid;
+        width: 48px;
+        height: 48px;
+        place-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 50%;
+      }
+
+      .risk-icon svg {
+        width: 21px;
+      }
+
+      .risk-item h3 {
+        margin: 0;
+        font-family: "Fraunces", serif;
+        font-size: 25px;
+        letter-spacing: -0.03em;
+      }
+
+      .risk-item p {
+        margin: 0;
+        color: rgba(255, 253, 248, 0.62);
+        font-size: 14px;
+      }
+
+      .risk-evidence {
+        display: inline-flex;
+        padding: 6px 10px;
+        gap: 6px;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 999px;
+        color: rgba(255, 253, 248, 0.74);
+        font-size: 10px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .difference-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 32px;
+      }
+
+      .statement {
+        position: relative;
+        min-height: 460px;
+        padding: 48px;
+        overflow: hidden;
+        border-radius: 26px;
+        color: var(--white);
+        background: var(--teal);
+      }
+
+      .statement::after {
+        position: absolute;
+        right: -140px;
+        bottom: -180px;
+        width: 430px;
+        height: 430px;
+        border: 70px solid rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+        content: "";
+      }
+
+      .statement-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .statement blockquote {
+        position: relative;
+        z-index: 2;
+        max-width: 650px;
+        margin: 90px 0 0;
+        font-family: "Fraunces", serif;
+        font-size: clamp(34px, 4vw, 52px);
+        letter-spacing: -0.05em;
+        line-height: 1.08;
+      }
+
+      .principle-list {
+        display: grid;
+        gap: 16px;
+      }
+
+      .principle {
+        display: grid;
+        padding: 25px;
+        grid-template-columns: auto 1fr;
+        gap: 18px;
+        align-items: start;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: rgba(255, 253, 248, 0.6);
+      }
+
+      .number {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border-radius: 50%;
+        color: var(--teal-dark);
+        background: var(--teal-soft);
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .principle h3 {
+        margin-bottom: 5px;
+        font-size: 16px;
+      }
+
+      .principle p {
+        margin: 0;
+        color: var(--ink-soft);
+        font-size: 13px;
+      }
+
+      .preview-grid {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 70px;
+        align-items: center;
+      }
+
+      .preview-copy h2 {
+        font-size: clamp(42px, 5vw, 68px);
+      }
+
+      .preview-copy p {
+        color: var(--ink-soft);
+      }
+
+      .check-list {
+        display: grid;
+        margin: 30px 0;
+        padding: 0;
+        gap: 14px;
+        list-style: none;
+      }
+
+      .check-list li {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .check-list svg {
+        width: 18px;
+        color: var(--teal);
+      }
+
+      .report-spread {
+        position: relative;
+        min-height: 610px;
+      }
+
+      .page {
+        position: absolute;
+        width: 330px;
+        height: 460px;
+        padding: 25px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--white);
+        box-shadow: var(--shadow);
+      }
+
+      .page-left {
+        top: 64px;
+        left: 0;
+        transform: rotate(-6deg);
+      }
+
+      .page-right {
+        z-index: 2;
+        top: 24px;
+        right: 0;
+        transform: rotate(4deg);
+      }
+
+      .page-title {
+        margin-bottom: 24px;
+        font-family: "Fraunces", serif;
+        font-size: 27px;
+        letter-spacing: -0.04em;
+        line-height: 1.1;
+      }
+
+      .mini-map {
+        position: relative;
+        height: 180px;
+        overflow: hidden;
+        border-radius: 12px;
+        background:
+          radial-gradient(circle at 45% 50%, rgba(199, 83, 67, 0.8) 0 7px, transparent 8px),
+          repeating-linear-gradient(30deg, transparent 0 19px, rgba(16, 44, 59, 0.12) 20px 22px),
+          repeating-linear-gradient(-40deg, transparent 0 27px, rgba(8, 122, 106, 0.16) 28px 31px),
+          var(--paper-deep);
+      }
+
+      .mini-chart {
+        display: flex;
+        height: 145px;
+        padding-top: 25px;
+        gap: 10px;
+        align-items: flex-end;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .mini-chart span {
+        flex: 1;
+        border-radius: 5px 5px 0 0;
+        background: var(--teal);
+      }
+
+      .mini-chart span:nth-child(2) {
+        height: 80%;
+        background: var(--amber);
+      }
+
+      .mini-chart span:nth-child(3) {
+        height: 44%;
+      }
+
+      .mini-chart span:nth-child(4) {
+        height: 64%;
+      }
+
+      .mini-chart span:nth-child(5) {
+        height: 92%;
+        background: var(--green);
+      }
+
+      .page-note {
+        margin-top: 20px;
+        padding: 13px;
+        border-radius: 9px;
+        color: var(--ink-soft);
+        background: var(--paper);
+        font-size: 10px;
+        line-height: 1.55;
+      }
+
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-top: 1px solid var(--line);
+      }
+
+      .step {
+        position: relative;
+        padding: 36px 32px 0 0;
+      }
+
+      .step:not(:last-child)::after {
+        position: absolute;
+        top: -1px;
+        right: 32px;
+        width: 34%;
+        border-top: 3px solid var(--teal);
+        content: "";
+      }
+
+      .step-index {
+        color: var(--teal);
+        font-family: "Fraunces", serif;
+        font-size: 46px;
+        font-weight: 700;
+      }
+
+      .step h3 {
+        margin: 25px 0 10px;
+        font-size: 18px;
+      }
+
+      .step p {
+        color: var(--ink-soft);
+        font-size: 14px;
+      }
+
+      .method-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: start;
+      }
+
+      .method-panel {
+        padding: 36px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .method-panel h3 {
+        margin-bottom: 26px;
+        font-family: "Fraunces", serif;
+        font-size: 28px;
+        letter-spacing: -0.04em;
+      }
+
+      .source-list {
+        display: grid;
+        padding: 0;
+        gap: 0;
+        list-style: none;
+      }
+
+      .source-list li {
+        display: flex;
+        padding: 15px 0;
+        gap: 12px;
+        justify-content: space-between;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+        color: rgba(255, 253, 248, 0.72);
+        font-size: 13px;
+      }
+
+      .source-list strong {
+        color: var(--white);
+      }
+
+      .confidence-list {
+        display: grid;
+        gap: 14px;
+      }
+
+      .confidence {
+        display: grid;
+        padding: 16px;
+        grid-template-columns: auto 1fr;
+        gap: 14px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .confidence-signal {
+        width: 10px;
+        height: 10px;
+        margin-top: 5px;
+        border-radius: 50%;
+        background: #77c7b5;
+        box-shadow: 0 0 0 5px rgba(119, 199, 181, 0.12);
+      }
+
+      .confidence:nth-child(2) .confidence-signal {
+        background: var(--amber);
+        box-shadow: 0 0 0 5px rgba(240, 184, 75, 0.12);
+      }
+
+      .confidence:nth-child(3) .confidence-signal {
+        background: #cf776b;
+        box-shadow: 0 0 0 5px rgba(207, 119, 107, 0.12);
+      }
+
+      .confidence h4 {
+        margin: 0 0 3px;
+        font-size: 13px;
+      }
+
+      .confidence p {
+        margin: 0;
+        color: rgba(255, 253, 248, 0.58);
+        font-size: 11px;
+      }
+
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        margin-top: 56px;
+        gap: 18px;
+        align-items: start;
+      }
+
+      .price-card {
+        position: relative;
+        padding: 30px;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: rgba(255, 253, 248, 0.68);
+      }
+
+      .price-card.featured {
+        padding-top: 44px;
+        border-color: var(--teal);
+        background: var(--white);
+        box-shadow: var(--shadow);
+        transform: translateY(-16px);
+      }
+
+      .popular {
+        position: absolute;
+        top: 0;
+        right: 28px;
+        padding: 7px 12px;
+        border-radius: 0 0 10px 10px;
+        color: var(--white);
+        background: var(--teal);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .price-card h3 {
+        margin-bottom: 4px;
+        font-family: "Fraunces", serif;
+        font-size: 25px;
+        letter-spacing: -0.04em;
+      }
+
+      .price-subtitle {
+        min-height: 44px;
+        margin: 0;
+        color: var(--ink-soft);
+        font-size: 12px;
+      }
+
+      .price {
+        margin: 24px 0;
+        font-family: "Fraunces", serif;
+        font-size: 42px;
+        font-weight: 700;
+        letter-spacing: -0.06em;
+      }
+
+      .price small {
+        color: var(--ink-soft);
+        font-family: "DM Sans", sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0;
+      }
+
+      .feature-list {
+        display: grid;
+        min-height: 250px;
+        margin: 24px 0;
+        padding: 20px 0 0;
+        gap: 13px;
+        border-top: 1px solid var(--line);
+        list-style: none;
+      }
+
+      .feature-list li {
+        display: flex;
+        gap: 9px;
+        align-items: flex-start;
+        color: var(--ink-soft);
+        font-size: 12px;
+      }
+
+      .feature-list svg {
+        width: 16px;
+        min-width: 16px;
+        color: var(--teal);
+      }
+
+      .price-card .button {
+        width: 100%;
+      }
+
+      .faq-layout {
+        display: grid;
+        grid-template-columns: 0.72fr 1.28fr;
+        gap: 90px;
+        align-items: start;
+      }
+
+      .faq-layout h2 {
+        position: sticky;
+        top: 100px;
+      }
+
+      .faq-list {
+        border-top: 1px solid var(--line);
+      }
+
+      details {
+        border-bottom: 1px solid var(--line);
+      }
+
+      summary {
+        display: flex;
+        min-height: 82px;
+        padding: 22px 4px;
+        gap: 20px;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 700;
+        cursor: pointer;
+        list-style: none;
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      summary::after {
+        display: grid;
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        content: "+";
+        transition: 180ms ease-out;
+      }
+
+      details[open] summary::after {
+        transform: rotate(45deg);
+      }
+
+      details p {
+        max-width: 650px;
+        margin: -4px 0 24px;
+        color: var(--ink-soft);
+        font-size: 14px;
+      }
+
+      .final-cta {
+        padding: 40px 0 100px;
+      }
+
+      .cta-panel {
+        position: relative;
+        padding: 74px;
+        overflow: hidden;
+        border-radius: 30px;
+        color: var(--white);
+        background: var(--teal);
+      }
+
+      .cta-panel::before,
+      .cta-panel::after {
+        position: absolute;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 50%;
+        content: "";
+      }
+
+      .cta-panel::before {
+        top: -130px;
+        right: -50px;
+        width: 370px;
+        height: 370px;
+      }
+
+      .cta-panel::after {
+        top: -65px;
+        right: 15px;
+        width: 240px;
+        height: 240px;
+      }
+
+      .cta-panel h2 {
+        position: relative;
+        z-index: 2;
+        max-width: 750px;
+        margin-bottom: 30px;
+      }
+
+      .cta-panel .button-primary {
+        color: var(--ink);
+        background: var(--white);
+        box-shadow: none;
+      }
+
+      .cta-panel .button-primary:hover {
+        background: var(--paper);
+      }
+
+      footer {
+        padding: 34px 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .footer-row {
+        display: flex;
+        gap: 24px;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .footer-row p,
+      .footer-links a {
+        color: var(--ink-soft);
+        font-size: 11px;
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 18px;
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          translate: 0 18px;
+        }
+        to {
+          opacity: 1;
+          translate: 0 0;
+        }
+      }
+
+      @media (max-width: 980px) {
+        .nav-links,
+        nav > .button {
+          display: none;
+        }
+
+        .nav-links.open {
+          position: absolute;
+          top: calc(100% + 1px);
+          right: 14px;
+          left: 14px;
+          display: grid;
+          padding: 18px;
+          gap: 6px;
+          border: 1px solid var(--line);
+          border-radius: 16px;
+          background: var(--white);
+          box-shadow: var(--shadow);
+        }
+
+        .nav-links.open a {
+          min-height: 44px;
+          padding: 10px 12px;
+          border-radius: 9px;
+        }
+
+        .nav-links.open a:hover {
+          background: var(--teal-soft);
+        }
+
+        .mobile-menu-button {
+          display: grid;
+          place-items: center;
+        }
+
+        .hero {
+          padding-top: 70px;
+        }
+
+        .hero-grid,
+        .preview-grid,
+        .difference-grid,
+        .method-grid,
+        .faq-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-grid {
+          gap: 40px;
+        }
+
+        .report-stage {
+          width: min(540px, 100%);
+          margin-inline: auto;
+        }
+
+        .section-head {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+
+        .risk-item {
+          grid-template-columns: 54px 1fr auto;
+        }
+
+        .risk-item p {
+          grid-column: 2 / -1;
+        }
+
+        .report-spread {
+          width: min(600px, 100%);
+          margin-inline: auto;
+        }
+
+        .pricing-grid {
+          grid-template-columns: 1fr;
+          max-width: 610px;
+          margin-inline: auto;
+        }
+
+        .price-card.featured {
+          transform: none;
+        }
+
+        .feature-list {
+          min-height: 0;
+        }
+
+        .faq-layout h2 {
+          position: static;
+        }
+      }
+
+      @media (max-width: 660px) {
+        .shell {
+          width: min(100% - 28px, 1180px);
+        }
+
+        .hero {
+          min-height: auto;
+          padding: 54px 0 70px;
+        }
+
+        h1 {
+          margin-top: 20px;
+          font-size: clamp(46px, 15vw, 66px);
+        }
+
+        .hero-copy > p {
+          font-size: 16px;
+        }
+
+        .hero-actions,
+        .hero-actions .button {
+          width: 100%;
+        }
+
+        .trust-list {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+        }
+
+        .report-stage {
+          min-height: 470px;
+        }
+
+        .report-main {
+          left: 0;
+          width: calc(100% - 28px);
+          padding: 22px;
+        }
+
+        .report-back {
+          right: -70px;
+          bottom: 0;
+          width: 270px;
+          height: 330px;
+        }
+
+        .map-orbit {
+          right: -260px;
+        }
+
+        .pin-one {
+          right: 8px;
+        }
+
+        .section {
+          padding: 78px 0;
+        }
+
+        .section-head {
+          margin-bottom: 38px;
+        }
+
+        h2 {
+          font-size: 43px;
+        }
+
+        .risk-item {
+          grid-template-columns: 46px 1fr;
+          padding: 22px 0;
+          gap: 14px;
+        }
+
+        .risk-item p,
+        .risk-evidence {
+          grid-column: 2;
+        }
+
+        .risk-evidence {
+          justify-self: start;
+        }
+
+        .statement {
+          min-height: 390px;
+          padding: 30px;
+        }
+
+        .statement blockquote {
+          margin-top: 60px;
+          font-size: 36px;
+        }
+
+        .report-spread {
+          min-height: 540px;
+          transform: scale(0.88);
+          transform-origin: top center;
+        }
+
+        .page-left {
+          left: -58px;
+        }
+
+        .page-right {
+          right: -58px;
+        }
+
+        .steps {
+          grid-template-columns: 1fr;
+          border-top: 0;
+        }
+
+        .step {
+          padding: 22px 0;
+          border-top: 1px solid var(--line);
+        }
+
+        .step:not(:last-child)::after {
+          display: none;
+        }
+
+        .method-panel {
+          padding: 24px;
+        }
+
+        .cta-panel {
+          padding: 48px 25px;
+        }
+
+        .cta-panel .button {
+          width: 100%;
+        }
+
+        .footer-row,
+        .footer-links {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Lewati ke konten utama</a>
+
+    <header class="nav-wrap">
+      <nav class="shell" aria-label="Navigasi utama">
+        <a class="brand" href="#" aria-label="Rumper, halaman utama">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 20v-9l7-6 7 6v9M9 20v-6h6v6" />
+            </svg>
+          </span>
+          Rumper
+        </a>
+        <div class="nav-links">
+          <a href="#risiko">Yang diperiksa</a>
+          <a href="#cara-kerja">Cara kerja</a>
+          <a href="#metodologi">Metodologi</a>
+          <a href="#harga">Harga</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <a class="button button-primary order-link" href="#harga">
+          Pesan audit lokasi
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m9 18 6-6-6-6" />
+          </svg>
+        </a>
+        <button class="mobile-menu-button" type="button" aria-label="Buka menu" aria-expanded="false">
+          <svg width="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 8h16M4 16h16" />
+          </svg>
+        </button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <div class="shell hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow"><span class="eyebrow-dot"></span>Audit lokasi independen</span>
+            <h1>Rumahnya terlihat cocok. Bagaimana dengan lokasinya?</h1>
+            <p>
+              Rumper memeriksa risiko banjir, beban perjalanan, akses jalan, fasilitas penting, dan red flag
+              lingkungan sebelum Anda membayar booking fee atau DP.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary order-link" href="#harga">
+                Pesan audit lokasi
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </a>
+              <a class="button button-secondary" href="#contoh-laporan">Lihat contoh laporan</a>
+            </div>
+            <ul class="trust-list" aria-label="Keunggulan layanan">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" />
+                </svg>
+                Laporan selesai maksimal 48 jam
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="m5 12 4 4L19 6" />
+                </svg>
+                Tanpa komisi developer atau agen
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 3 4 7v5c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-4Z" />
+                </svg>
+                Data disertai sumber dan keyakinan
+              </li>
+            </ul>
+          </div>
+
+          <div class="report-stage" aria-label="Contoh ringkasan Rumper Score">
+            <div class="map-orbit" aria-hidden="true"></div>
+            <div class="report-paper report-back" aria-hidden="true"></div>
+            <div class="report-paper report-main">
+              <div class="report-kicker"><span>Rumper Score</span><span>Audit #RMP-017</span></div>
+              <div class="score-row">
+                <div class="score-number">68<span>/100</span></div>
+                <span class="status">Perlu catatan</span>
+              </div>
+              <div class="score-line" aria-hidden="true"><span></span></div>
+              <div class="risk-row"><span>Ketahanan banjir</span><span>Risiko tinggi · 42</span></div>
+              <div class="risk-row"><span>Efisiensi commute</span><span>Sedang · 65</span></div>
+              <div class="risk-row"><span>Akses fisik &amp; jalan</span><span>Baik · 82</span></div>
+              <div class="risk-row"><span>Fasilitas esensial</span><span>Baik · 78</span></div>
+              <div class="confidence-note">
+                <svg width="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="m5 12 4 4L19 6" />
+                </svg>
+                Confidence data: kuat · 8 sumber diperiksa
+              </div>
+            </div>
+            <span class="pin pin-one" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </span>
+            <span class="pin pin-two" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-dark" id="risiko">
+        <div class="shell">
+          <div class="section-head">
+            <span class="section-index">01 — Yang sering luput</span>
+            <div>
+              <h2>Brosur menjual rumah. Kami memeriksa realitas di sekitarnya.</h2>
+              <p class="section-intro">
+                Risiko lokasi jarang terlihat saat open house. Rumper menyusun bukti tersebar menjadi catatan keputusan
+                yang bisa Anda pahami dan tindak lanjuti.
+              </p>
+            </div>
+          </div>
+          <div class="risk-ledger">
+            <article class="risk-item">
+              <span class="risk-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M3 15c2-2 4-2 6 0s4 2 6 0 4-2 6 0M4 11c2-2 4-2 6 0s4 2 6 0 4-2 6 0M12 3v4" />
+                </svg>
+              </span>
+              <h3>Risiko banjir</h3>
+              <p>Riwayat genangan, elevasi, aliran air, dan kondisi akses utama ketika hujan.</p>
+              <span class="risk-evidence">BPBD · berita · warga</span>
+            </article>
+            <article class="risk-item">
+              <span class="risk-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M4 17h16M6 17V8l6-4 6 4v9M9 17v-5h6v5" />
+                </svg>
+              </span>
+              <h3>Commute harian</h3>
+              <p>Waktu realistis, pergantian moda, biaya perjalanan, dan titik macet berulang.</p>
+              <span class="risk-evidence">Rute · jam sibuk · transit</span>
+            </article>
+            <article class="risk-item">
+              <span class="risk-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M4 19 9 5m6 14L20 5M12 5v4m0 4v6" />
+                </svg>
+              </span>
+              <h3>Akses fisik</h3>
+              <p>Lebar jalan, kualitas permukaan, bottleneck, dan akses kendaraan darurat.</p>
+              <span class="risk-evidence">Street view · peta · observasi</span>
+            </article>
+            <article class="risk-item">
+              <span class="risk-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 21s7-4 7-11a7 7 0 1 0-14 0c0 7 7 11 7 11Z" /><circle cx="12" cy="10" r="2" />
+                </svg>
+              </span>
+              <h3>Fasilitas esensial</h3>
+              <p>Akses nyata menuju rumah sakit, sekolah, transportasi umum, dan belanja harian.</p>
+              <span class="risk-evidence">Jarak tempuh · kualitas · opsi</span>
+            </article>
+            <article class="risk-item">
+              <span class="risk-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 3 2 21h20L12 3Z" /><path d="M12 9v5m0 3h.01" />
+                </svg>
+              </span>
+              <h3>Red flag lingkungan</h3>
+              <p>TPA, SUTET, pabrik, kebisingan, sengketa, dan gangguan lain di sekitar lokasi.</p>
+              <span class="risk-evidence">Radius 1 km · multi-sumber</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="shell difference-grid">
+          <div class="statement">
+            <span class="statement-label">Posisi kami</span>
+            <blockquote>Rumper tidak membantu menjual rumah. Rumper membantu Anda memutuskan apakah lokasinya layak dipilih.</blockquote>
+          </div>
+          <div class="principle-list">
+            <article class="principle">
+              <span class="number">01</span>
+              <div>
+                <h3>Berpihak pada pembeli</h3>
+                <p>Pendapatan berasal dari biaya audit, bukan komisi penjualan properti.</p>
+              </div>
+            </article>
+            <article class="principle">
+              <span class="number">02</span>
+              <div>
+                <h3>Bukti sebelum opini</h3>
+                <p>Setiap temuan penting dilengkapi sumber, tanggal observasi, dan tingkat keyakinan.</p>
+              </div>
+            </article>
+            <article class="principle">
+              <span class="number">03</span>
+              <div>
+                <h3>Jujur tentang keterbatasan</h3>
+                <p>Data lemah ditandai untuk divalidasi langsung, bukan dibuat seolah pasti.</p>
+              </div>
+            </article>
+            <article class="principle">
+              <span class="number">04</span>
+              <div>
+                <h3>Berorientasi keputusan</h3>
+                <p>Laporan berakhir dengan red flag, pertanyaan survei, dan langkah tindak lanjut.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contoh-laporan">
+        <div class="shell preview-grid">
+          <div class="preview-copy">
+            <span class="section-index">02 — Hasil yang diterima</span>
+            <h2>Bukan tumpukan data. Sebuah alat bantu keputusan.</h2>
+            <p>
+              Laporan visual menyatukan skor, bukti, catatan risiko, dan panduan survei agar Anda dapat berdiskusi
+              dengan pasangan atau keluarga secara objektif.
+            </p>
+            <ul class="check-list">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6" /></svg>
+                Rumper Location Score dan breakdown risiko
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6" /></svg>
+                Temuan utama beserta sumber dan confidence label
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6" /></svg>
+                Checklist survei dan pertanyaan untuk warga
+              </li>
+            </ul>
+            <a class="button button-secondary" href="#harga">Pilih paket laporan</a>
+          </div>
+          <div class="report-spread" aria-label="Pratinjau halaman laporan Rumper">
+            <div class="page page-left">
+              <div class="report-kicker"><span>Temuan 01</span><span>Banjir</span></div>
+              <h3 class="page-title">Tiga titik genangan terverifikasi dalam radius 1 km.</h3>
+              <div class="mini-map" aria-hidden="true"></div>
+              <div class="page-note">
+                <strong>Catatan validasi:</strong> tanyakan durasi surut dan akses alternatif kepada warga saat survei.
+              </div>
+            </div>
+            <div class="page page-right">
+              <div class="report-kicker"><span>Ringkasan</span><span>RLS V1</span></div>
+              <h3 class="page-title">Skor lokasi dan lima dimensi utama.</h3>
+              <div class="mini-chart" aria-hidden="true">
+                <span style="height: 42%"></span><span></span><span></span><span></span><span></span>
+              </div>
+              <div class="page-note">
+                <strong>Kesimpulan:</strong> layak dipertimbangkan jika risiko banjir pada akses utama dapat diterima.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="cara-kerja">
+        <div class="shell">
+          <div class="section-head">
+            <span class="section-index">03 — Cara kerja</span>
+            <div>
+              <h2>Dari alamat kandidat menjadi laporan dalam 48 jam.</h2>
+              <p class="section-intro">
+                Proses audit dilakukan secara semi-manual agar setiap temuan tetap relevan dengan kebutuhan dan rutinitas
+                Anda.
+              </p>
+            </div>
+          </div>
+          <div class="steps">
+            <article class="step">
+              <span class="step-index">01</span>
+              <h3>Kirim detail lokasi</h3>
+              <p>Isi Typeform dengan alamat kandidat, lokasi kerja, moda transportasi, dan kebutuhan utama.</p>
+            </article>
+            <article class="step">
+              <span class="step-index">02</span>
+              <h3>Kami melakukan audit</h3>
+              <p>Analis Rumper memeriksa data resmi, rute perjalanan, kondisi akses, dan bukti digital sekitar.</p>
+            </article>
+            <article class="step">
+              <span class="step-index">03</span>
+              <h3>Terima laporan keputusan</h3>
+              <p>Laporan PDF dikirim melalui WhatsApp dan email, lengkap dengan rekomendasi validasi lapangan.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-dark" id="metodologi">
+        <div class="shell">
+          <div class="section-head">
+            <span class="section-index">04 — Metodologi</span>
+            <div>
+              <h2>Kepercayaan datang dari transparansi, bukan sekadar skor.</h2>
+              <p class="section-intro">
+                Rumper menunjukkan asal informasi dan seberapa kuat bukti yang mendukung setiap temuan penting.
+              </p>
+            </div>
+          </div>
+          <div class="method-grid">
+            <article class="method-panel">
+              <h3>Sumber yang diperiksa</h3>
+              <ul class="source-list">
+                <li><strong>Risiko banjir</strong><span>BPBD, BNPB, berita, warga</span></li>
+                <li><strong>Commute</strong><span>Simulasi rute dan jam sibuk</span></li>
+                <li><strong>Akses fisik</strong><span>Peta, street view, observasi</span></li>
+                <li><strong>Fasilitas</strong><span>Jarak tempuh dan pilihan nyata</span></li>
+                <li><strong>Red flags</strong><span>Multi-sumber dalam radius lokasi</span></li>
+              </ul>
+            </article>
+            <article class="method-panel">
+              <h3>Confidence label</h3>
+              <div class="confidence-list">
+                <div class="confidence">
+                  <span class="confidence-signal"></span>
+                  <div>
+                    <h4>Data kuat</h4>
+                    <p>Didukung sumber resmi, terkini, dan bukti yang saling menguatkan.</p>
+                  </div>
+                </div>
+                <div class="confidence">
+                  <span class="confidence-signal"></span>
+                  <div>
+                    <h4>Data sedang</h4>
+                    <p>Sumber dapat dipercaya tetapi perlu dilengkapi saat survei.</p>
+                  </div>
+                </div>
+                <div class="confidence">
+                  <span class="confidence-signal"></span>
+                  <div>
+                    <h4>Perlu validasi</h4>
+                    <p>Informasi terbatas atau bertentangan; wajib dicek langsung.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="harga">
+        <div class="shell">
+          <div class="section-head">
+            <span class="section-index">05 — Paket audit</span>
+            <div>
+              <h2>Biaya kecil sebelum komitmen finansial terbesar.</h2>
+              <p class="section-intro">Pilih kedalaman audit sesuai tahap keputusan dan jumlah kandidat rumah Anda.</p>
+            </div>
+          </div>
+          <div class="pricing-grid">
+            <article class="price-card">
+              <h3>Basic Location Check</h3>
+              <p class="price-subtitle">Pemeriksaan awal untuk satu kandidat lokasi.</p>
+              <div class="price">Rp149rb <small>/ lokasi</small></div>
+              <ul class="feature-list">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6" /></svg>Riwayat banjir 5 tahun</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6" /></svg>Simulasi satu rute kantor</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6" /></svg>Red flag radius 500 meter</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6" /></svg>Laporan PDF via WhatsApp</li>
+              </ul>
+              <a class="button button-secondary order-link" href="#order">Pilih Basic</a>
+            </article>
+
+            <article class="price-card featured">
+              <span class="popular">Direkomendasikan</span>
+              <h3>Comprehensive Audit</h3>
+              <p class="price-subtitle">Audit lengkap sebelum booking fee atau DP.</p>
+              <div class="price">Rp299rb <small>/ lokasi</small></div>
+              <ul class="feature-list">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6" /></svg>Seluruh fitur paket Basic</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6" /></svg>Riwayat banjir mendalam 10 tahun</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6" /></svg>Simulasi commute multi-moda</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6" /></svg>Audit akses fisik dan lingkungan</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6" /></svg>Checklist survei dan konsultasi</li>
+              </ul>
+              <a class="button button-primary order-link" href="#order">Pesan audit lengkap</a>
+            </article>
+
+            <article class="price-card">
+              <h3>Dual-Location Compare</h3>
+              <p class="price-subtitle">Bandingkan dua kandidat secara objektif.</p>
+              <div class="price">Rp499rb <small>/ 2 lokasi</small></div>
+              <ul class="feature-list">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6" /></svg>Dua Comprehensive Audit</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6" /></svg>Tabel perbandingan head-to-head</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6" /></svg>Rekomendasi prioritas pilihan</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6" /></svg>Konsultasi Google Meet 20 menit</li>
+              </ul>
+              <a class="button button-secondary order-link" href="#order">Bandingkan lokasi</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="faq">
+        <div class="shell faq-layout">
+          <h2>Pertanyaan sebelum mulai.</h2>
+          <div class="faq-list">
+            <details>
+              <summary>Apakah skor Rumper menjamin lokasi aman?</summary>
+              <p>
+                Tidak. Rumper adalah alat bantu keputusan berdasarkan data dan bukti yang tersedia. Kami selalu menyertakan
+                confidence label dan mendorong Anda melakukan validasi lapangan.
+              </p>
+            </details>
+            <details>
+              <summary>Area mana saja yang dapat diperiksa?</summary>
+              <p>
+                Concierge MVP berfokus pada Jabodetabek, terutama kawasan pertumbuhan baru di Tangerang, Depok, Bekasi,
+                Bogor, dan kota satelit lainnya.
+              </p>
+            </details>
+            <details>
+              <summary>Berapa lama laporan selesai?</summary>
+              <p>Laporan dikirim maksimal 48 jam kerja setelah detail lokasi dan pembayaran berhasil diverifikasi.</p>
+            </details>
+            <details>
+              <summary>Apakah Rumper bekerja sama dengan developer?</summary>
+              <p>
+                Tidak. Rumper tidak menerima komisi penjualan dari developer atau agen. Layanan dibayar langsung oleh
+                pembeli agar analisis tetap independen.
+              </p>
+            </details>
+            <details>
+              <summary>Apa yang perlu saya siapkan?</summary>
+              <p>
+                Siapkan alamat atau pin Google Maps kandidat rumah, link listing jika ada, lokasi kerja, moda perjalanan,
+                serta kebutuhan utama keluarga Anda.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="final-cta" id="order">
+        <div class="shell">
+          <div class="cta-panel">
+            <span class="statement-label">Sebelum booking fee atau DP</span>
+            <h2>Pastikan keputusan rumah pertama Anda dibuat dengan informasi yang cukup.</h2>
+            <a class="button button-primary order-link" href="#harga">
+              Pesan audit lokasi
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="shell footer-row">
+        <a class="brand" href="#" aria-label="Rumper, halaman utama">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 20v-9l7-6 7 6v9M9 20v-6h6v6" />
+            </svg>
+          </span>
+          Rumper
+        </a>
+        <p>Audit lokasi independen untuk pembeli rumah pertama di Jabodetabek.</p>
+        <div class="footer-links">
+          <a href="#metodologi">Metodologi</a>
+          <a href="#faq">FAQ</a>
+          <a href="mailto:halo@rumper.id">Kontak</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const TYPEFORM_URL = "";
+      const menuButton = document.querySelector(".mobile-menu-button");
+
+      menuButton.addEventListener("click", () => {
+        const expanded = menuButton.getAttribute("aria-expanded") === "true";
+        menuButton.setAttribute("aria-expanded", String(!expanded));
+        document.querySelector(".nav-links").classList.toggle("open", !expanded);
+      });
+
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          menuButton.setAttribute("aria-expanded", "false");
+          document.querySelector(".nav-links").classList.remove("open");
+        });
+      });
+
+      document.querySelectorAll(".order-link").forEach((link) => {
+        link.addEventListener("click", (event) => {
+          if (!TYPEFORM_URL) return;
+          event.preventDefault();
+          window.open(TYPEFORM_URL, "_blank", "noopener,noreferrer");
+        });
+      });
+    </script>
+  </body>
+</html>
