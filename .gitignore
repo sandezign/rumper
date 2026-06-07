@@ -18,6 +18,7 @@ coverage/
 .DS_Store
 .idea/
 .vscode/
+.superpowers/
 
 # Customer and order data
 operations/orders/customer-data/
