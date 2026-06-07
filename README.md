@@ -24,4 +24,4 @@ Jangan commit data pelanggan, alamat kandidat rumah, data pembayaran, laporan pe
 ## Fokus Milestone Pertama
 
 Prioritas pertama adalah menyiapkan operations kit lengkap. Website hanya berfungsi sebagai marketing site dengan Typeform sebagai alur pemesanan utama.
-# ruper
+# rumper
