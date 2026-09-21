@@ -1,0 +1,138 @@
+# Rumper CI/CD (docs/08 §4, nihonjung doc-28 pattern): build → push → migrate → deploy
+# Cloud Run service (api+SPA) + Cloud Run Job (geo ingestion). Trigger: `rumper` (manual,
+# main branch). Build SA: rumper-build@; runtime SA: rumper-run@.
+substitutions:
+  _REGION: asia-southeast2
+  _REPO: rumper
+  _SERVICE: rumper-api
+  _JOB: rumper-ingest
+  _JOB_BOUNDARIES: rumper-ingest-boundaries
+  _RUNTIME_SA: rumper-run@rumper-499015.iam.gserviceaccount.com
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+images:
+  - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:${SHORT_SHA}
+  - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:latest
+
+availableSecrets:
+  secretManager:
+    - versionName: projects/${PROJECT_ID}/secrets/rumper-env/versions/latest
+      env: RUMPER_ENV
+
+steps:
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    entrypoint: bash
+    secretEnv: [RUMPER_ENV]
+    args:
+      - -c
+      - |
+        # frontend build-time identifiers come from the rumper-env secret, not the repo
+        VITE_GOOGLE_CLIENT_ID=$(printf '%s' "$$RUMPER_ENV" | grep '^VITE_GOOGLE_CLIENT_ID=' | cut -d= -f2-)
+        VITE_GOOGLE_MAPS_KEY=$(printf '%s' "$$RUMPER_ENV" | grep '^VITE_GOOGLE_MAPS_KEY=' | cut -d= -f2-)
+        docker build \
+          --build-arg=VITE_GOOGLE_CLIENT_ID="$$VITE_GOOGLE_CLIENT_ID" \
+          --build-arg=VITE_GOOGLE_MAPS_KEY="$$VITE_GOOGLE_MAPS_KEY" \
+          -t=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:${SHORT_SHA} \
+          -t=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:latest \
+          .
+
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    args: [push, --all-tags, "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api"]
+
+  - id: migrate
+    name: ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:${SHORT_SHA}
+    entrypoint: bash
+    secretEnv: [RUMPER_ENV]
+    args:
+      - -c
+      - printf '%s' "$$RUMPER_ENV" > /tmp/prod.env && cd /app && ENV_FILE=/tmp/prod.env alembic upgrade head
+
+  - id: deploy-api
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_SERVICE}
+      - --image=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:${SHORT_SHA}
+      - --region=${_REGION}
+      - --service-account=${_RUNTIME_SA}
+      - --allow-unauthenticated
+      - --set-secrets=/secrets/env=rumper-env:latest
+      - --set-env-vars=ENV_FILE=/secrets/env
+      - --memory=512Mi
+      - --cpu=1
+      - --min-instances=0
+      - --max-instances=3
+      - --timeout=600
+
+  - id: deploy-ingest-job
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - jobs
+      - deploy
+      - ${_JOB}
+      - --image=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:${SHORT_SHA}
+      - --region=${_REGION}
+      - --service-account=${_RUNTIME_SA}
+      - --set-secrets=/secrets/env=rumper-env:latest
+      - --set-env-vars=ENV_FILE=/secrets/env
+      - --command=python
+      - --args=-m,app.jobs.ingest_geo
+      - --task-timeout=3600
+      # geo ingest is a monthly batch; bump back to 1Gi if a large OSM ingest OOMs
+      - --memory=512Mi
+      - --max-retries=1
+
+  # Kelurahan boundaries + flood index (docs/10 §6, docs/19 Wave A). Separate job because
+  # it hits BIG/InaRISK rather than Overpass and runs on its own weekly cadence.
+  - id: deploy-boundaries-job
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - jobs
+      - deploy
+      - ${_JOB_BOUNDARIES}
+      - --image=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:${SHORT_SHA}
+      - --region=${_REGION}
+      - --service-account=${_RUNTIME_SA}
+      - --set-secrets=/secrets/env=rumper-env:latest
+      - --set-env-vars=ENV_FILE=/secrets/env
+      - --command=python
+      - --args=-m,app.jobs.ingest_boundaries
+      - --task-timeout=900
+      - --memory=512Mi
+      - --max-retries=1
+
+  # Firebase Hosting serves the SPA at rumper.web.app and rewrites /api/** to the Cloud Run
+  # service above. Without this step a deploy updated Cloud Run only, and rumper.web.app kept
+  # serving whatever bundle was last pushed by hand — which is exactly what happened.
+  #
+  # The bundle is taken out of the image we just built, not rebuilt here, so Hosting and
+  # Cloud Run can never serve different code.
+  - id: deploy-hosting
+    name: gcr.io/cloud-builders/docker
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -e
+        cid=$(docker create ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:${SHORT_SHA})
+        rm -rf backend/static && mkdir -p backend/static
+        docker cp "$$cid:/app/static/." backend/static/
+        docker rm "$$cid" >/dev/null
+
+  # firebase-tools via npx rather than a gcr.io/$PROJECT_ID/firebase builder: that community
+  # image has to be built and maintained in-project, and does not exist here. Auth comes from
+  # the build service account's ADC, so no token is stored anywhere.
+  - id: firebase-deploy
+    name: node:22-slim
+    entrypoint: npx
+    args: ["-y", "firebase-tools@13", "deploy", "--only", "hosting", "--project", "${PROJECT_ID}", "--non-interactive"]

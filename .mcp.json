@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "figma": {
+      "command": "./scripts/figma-mcp.sh",
+      "args": [],
+      "env": {}
+    }
+  }
+}

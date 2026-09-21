@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 286" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Peta bukti lokasi rumah</title>
+  <desc id="desc">Ilustrasi peta yang menghubungkan rumah dengan area banjir, rute perjalanan, stasiun, sekolah, klinik, dan supermarket.</desc>
+  <defs>
+    <clipPath id="map-clip"><circle cx="180" cy="143" r="137"/></clipPath>
+    <filter id="pin-shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#001E2B" flood-opacity=".12"/>
+    </filter>
+  </defs>
+
+  <circle cx="180" cy="143" r="138" fill="#EAF8F1" stroke="#D9EEE4" stroke-width="2"/>
+  <g clip-path="url(#map-clip)">
+    <path d="M-8 36 74 20l36 46-28 54L4 112Z" fill="#D7F1E2"/>
+    <path d="m240 2 88 28 42 68-76 30-54-40Z" fill="#D9F2E4"/>
+    <path d="m224 205 82-21 60 50-45 74-92-34Z" fill="#D2EEDC"/>
+    <path d="M76 174 118 132l48 22-12 58-62 22Z" fill="#D8F1E2"/>
+
+    <g stroke="#FFF" stroke-width="12" stroke-linecap="round">
+      <path d="M-12 74 73 92l81-56 77 29 139-11"/>
+      <path d="M40-5 66 62l-19 71 46 53-23 116"/>
+      <path d="m144-6 11 60-19 76 34 66-14 111"/>
+      <path d="m266-10-9 72 27 61-32 64 12 115"/>
+      <path d="m-20 207 89-23 67 37 77-21 155 16"/>
+    </g>
+
+    <g fill="#C7D0D5" opacity=".72">
+      <rect x="16" y="36" width="26" height="18" rx="4" transform="rotate(13 16 36)"/>
+      <rect x="85" y="27" width="32" height="18" rx="4" transform="rotate(-21 85 27)"/>
+      <rect x="192" y="26" width="27" height="19" rx="4" transform="rotate(18 192 26)"/>
+      <rect x="296" y="74" width="29" height="19" rx="4" transform="rotate(-12 296 74)"/>
+      <rect x="28" y="125" width="31" height="19" rx="4" transform="rotate(9 28 125)"/>
+      <rect x="302" y="143" width="25" height="18" rx="4" transform="rotate(14 302 143)"/>
+      <rect x="92" y="240" width="28" height="17" rx="4" transform="rotate(-12 92 240)"/>
+      <rect x="208" y="234" width="31" height="18" rx="4" transform="rotate(17 208 234)"/>
+    </g>
+
+    <path d="M-10 190c44-23 67-2 101 6 39 10 58-8 88 7 34 17 54 53 111 58 43 4 69-11 97-23v76H-10Z" fill="#8CD5F6"/>
+    <path d="M-10 215c42-17 70-2 101 8 39 12 61-6 92 9 39 19 56 48 111 53 38 4 65-5 93-16v45H-10Z" fill="#57B8EA"/>
+    <path d="M-2 184c39-21 67-4 96 4 44 12 64-7 94 9 34 18 51 45 105 51 42 5 69-5 96-18" stroke="#167DC2" stroke-width="3" stroke-dasharray="7 8" stroke-linecap="round"/>
+
+    <path d="M218 132c31-10 35-37 47-56 12-18 28-27 51-37" stroke="#E8A200" stroke-width="5" stroke-linecap="round" stroke-dasharray="8 9"/>
+
+    <g fill="#68B780">
+      <circle cx="86" cy="73" r="9"/><rect x="84" y="79" width="4" height="13" rx="2"/>
+      <circle cx="286" cy="105" r="10"/><rect x="284" y="113" width="4" height="14" rx="2"/>
+      <circle cx="237" cy="188" r="9"/><rect x="235" y="195" width="4" height="14" rx="2"/>
+      <circle cx="117" cy="125" r="8"/><rect x="115" y="131" width="4" height="12" rx="2"/>
+    </g>
+  </g>
+
+  <circle cx="180" cy="144" r="55" stroke="#6CC99B" stroke-width="2" stroke-dasharray="5 6"/>
+  <circle cx="180" cy="144" r="38" fill="#C9F1D8" opacity=".72"/>
+
+  <g filter="url(#pin-shadow)">
+    <path d="M180 78c-17 0-30 13-30 30 0 23 30 48 30 48s30-25 30-48c0-17-13-30-30-30Z" fill="#00B545"/>
+    <circle cx="180" cy="108" r="10" fill="#FFF"/>
+  </g>
+
+  <g filter="url(#pin-shadow)">
+    <path d="m151 156 29-22 29 22v32h-58Z" fill="#FFF" stroke="#001E2B" stroke-width="2" stroke-linejoin="round"/>
+    <path d="m146 158 34-27 34 27" stroke="#C95746" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="174" y="168" width="12" height="20" rx="2" fill="#003D4F"/>
+    <rect x="157" y="165" width="10" height="9" rx="2" fill="#8CD5F6"/>
+    <rect x="193" y="165" width="10" height="9" rx="2" fill="#8CD5F6"/>
+  </g>
+
+  <g filter="url(#pin-shadow)" font-family="DM Sans, Arial, sans-serif" font-size="10" font-weight="700" fill="#001E2B">
+    <g transform="translate(260 34)">
+      <path d="M14 0C6.3 0 0 6.2 0 13.9 0 24.6 14 36 14 36s14-11.4 14-22.1C28 6.2 21.7 0 14 0Z" fill="#003D4F"/>
+      <path d="M9 9h10v9H9zM7 18h14M10 21h1M17 21h1" stroke="#FFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="31" y="5" width="51" height="24" rx="8" fill="#FFF" stroke="#DDE5E8"/>
+      <text x="41" y="21">Stasiun</text>
+    </g>
+    <g transform="translate(46 70)">
+      <path d="M14 0C6.3 0 0 6.2 0 13.9 0 24.6 14 36 14 36s14-11.4 14-22.1C28 6.2 21.7 0 14 0Z" fill="#003D4F"/>
+      <path d="m7 12 7-4 7 4-7 4-7-4Zm3 4v5h8v-5" stroke="#FFF" stroke-width="2" stroke-linejoin="round"/>
+      <rect x="31" y="5" width="52" height="24" rx="8" fill="#FFF" stroke="#DDE5E8"/>
+      <text x="41" y="21">Sekolah</text>
+    </g>
+    <g transform="translate(246 128)">
+      <path d="M14 0C6.3 0 0 6.2 0 13.9 0 24.6 14 36 14 36s14-11.4 14-22.1C28 6.2 21.7 0 14 0Z" fill="#003D4F"/>
+      <path d="M8 10h3l2 8h8l2-6H12M14 22h.1M20 22h.1" stroke="#FFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="31" y="5" width="78" height="24" rx="8" fill="#FFF" stroke="#DDE5E8"/>
+      <text x="39" y="21">Supermarket</text>
+    </g>
+    <g transform="translate(238 204)">
+      <path d="M14 0C6.3 0 0 6.2 0 13.9 0 24.6 14 36 14 36s14-11.4 14-22.1C28 6.2 21.7 0 14 0Z" fill="#003D4F"/>
+      <path d="M11 8h6v4h4v6h-4v4h-6v-4H7v-6h4V8Z" fill="#FFF"/>
+      <rect x="31" y="5" width="47" height="24" rx="8" fill="#FFF" stroke="#DDE5E8"/>
+      <text x="41" y="21">Klinik</text>
+    </g>
+  </g>
+
+  <g transform="translate(12 235)" font-family="DM Sans, Arial, sans-serif" font-size="10" font-weight="700">
+    <rect width="104" height="32" rx="10" fill="#FFF" stroke="#DDE5E8"/>
+    <circle cx="17" cy="16" r="6" fill="#57B8EA"/>
+    <text x="30" y="20" fill="#001E2B">Area risiko banjir</text>
+  </g>
+</svg>
