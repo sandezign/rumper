@@ -1,0 +1,396 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - link "Rumper" [ref=e5] [cursor=pointer]:
+      - /url: "#top"
+    - generic [ref=e10]:
+      - link "Cara Kerja" [ref=e11] [cursor=pointer]:
+        - /url: "#cara-kerja"
+      - link "Yang Dicek" [ref=e12] [cursor=pointer]:
+        - /url: "#yang-dicek"
+      - link "Contoh Laporan" [ref=e13] [cursor=pointer]:
+        - /url: "#contoh"
+      - link "Harga" [ref=e14] [cursor=pointer]:
+        - /url: "#harga"
+      - link "FAQ" [ref=e15] [cursor=pointer]:
+        - /url: "#faq"
+    - generic [ref=e16]:
+      - link "Lihat Contoh" [ref=e17] [cursor=pointer]:
+        - /url: "#contoh"
+      - link "Cek Lokasi →" [ref=e18] [cursor=pointer]:
+        - /url: "#cek"
+        - text: Cek Lokasi
+        - generic [ref=e19]: →
+  - main [ref=e20]:
+    - generic [ref=e22]:
+      - link "Cek lokasi rumah - Jabodetabek" [ref=e23] [cursor=pointer]:
+        - /url: /v2/start
+        - generic [ref=e27]: Cek lokasi rumah · Jabodetabek
+        - generic [aria-hidden] [ref=e28]: →
+      - heading "Sudah suka rumahnya? Cek dulu risiko lokasinya." [level=1] [ref=e29]: Sudah suka rumahnya?Cek dulu risiko lokasinya.
+      - paragraph [ref=e30]: Masukkan lokasi rumah incaran Anda. Rumper membantu melihat temuan awal tentang banjir, waktu tempuh, akses, fasilitas penting, dan red flag di sekitar lokasi.
+      - generic [ref=e31]:
+        - textbox "Alamat atau nama perumahan" [ref=e35]:
+          - /placeholder: "Contoh: Grand Galaxy Bekasi"
+        - button "Cek Lokasi →" [ref=e36] [cursor=pointer]:
+          - text: Cek Lokasi
+          - generic [ref=e37]: →
+      - generic [ref=e38]:
+        - generic [ref=e39]: Mulai dari rumah incaran Anda
+        - generic [ref=e43]: Jawab beberapa pertanyaan singkat
+        - generic [ref=e47]: Hasil awal untuk ditelaah
+      - generic "Contoh tampilan laporan Rumper" [ref=e51]:
+        - group "Pilihan contoh laporan lokasi" [ref=e52]:
+          - generic [ref=e53]:
+            - button "Tampilkan laporan Grand Galaxy City" [ref=e54] [cursor=pointer]:
+              - generic [ref=e55]: ⌁
+              - generic [ref=e56]: Grand Galaxy
+            - button "Tampilkan laporan Kota Wisata" [ref=e57] [cursor=pointer]:
+              - generic [ref=e58]: ✦
+              - generic [ref=e59]: Kota Wisata
+            - button "Tampilkan laporan BSD City" [ref=e60] [cursor=pointer]:
+              - generic [ref=e61]: ⌖
+              - generic [ref=e62]: BSD City
+            - button "Tampilkan laporan PIK 2" [ref=e63] [cursor=pointer]:
+              - generic [ref=e64]: ☰
+              - generic [ref=e65]: PIK 2
+          - button "Tampilkan laporan PIK 2" [ref=e66] [cursor=pointer]:
+            - generic [ref=e67]:
+              - generic [ref=e68]:
+                - generic [ref=e69]: ⌂
+                - generic [ref=e70]:
+                  - strong [ref=e71]: PIK 2
+                  - generic [ref=e72]: Jakarta Utara
+              - generic [ref=e73]:
+                - generic [ref=e74]: Rawan Banjir
+                - generic "Klik kartu untuk ganti" [ref=e75]: Ganti ↻
+            - generic [ref=e76]: Properti incaran
+            - generic [ref=e79]:
+              - generic [ref=e80]: 4 temuan kritis
+              - generic [ref=e81]: 55/100
+          - button "Tampilkan laporan BSD City" [ref=e82] [cursor=pointer]:
+            - generic [ref=e83]:
+              - generic [ref=e84]:
+                - generic [ref=e85]: ⌂
+                - generic [ref=e86]:
+                  - strong [ref=e87]: BSD City
+                  - generic [ref=e88]: Tangerang Selatan
+              - generic [ref=e89]:
+                - generic [ref=e90]: Sangat Aman
+                - generic "Klik kartu untuk ganti" [ref=e91]: Ganti ↻
+            - generic [ref=e92]: Properti incaran
+            - generic [ref=e94]:
+              - generic [ref=e95]: Tidak ada temuan mayor
+              - generic [ref=e96]: 94/100
+          - button "Tampilkan laporan Kota Wisata" [ref=e97] [cursor=pointer]:
+            - generic [ref=e98]:
+              - generic [ref=e99]:
+                - generic [ref=e100]: ⌂
+                - generic [ref=e101]:
+                  - strong [ref=e102]: Kota Wisata
+                  - generic [ref=e103]: Cibubur
+              - generic [ref=e104]:
+                - generic [ref=e105]: Cek Akses
+                - generic "Klik kartu untuk ganti" [ref=e106]: Ganti ↻
+            - generic [ref=e107]: Properti incaran
+            - generic [ref=e110]:
+              - generic [ref=e111]: 1 temuan mobilitas
+              - generic [ref=e112]: 82/100
+          - button "Tampilkan laporan Grand Galaxy City" [ref=e113] [cursor=pointer]:
+            - generic [ref=e114]:
+              - generic [ref=e115]:
+                - generic [ref=e116]: ⌂
+                - generic [ref=e117]:
+                  - strong [ref=e118]: Grand Galaxy City
+                  - generic [ref=e119]: Bekasi Selatan
+              - generic [ref=e120]:
+                - generic [ref=e121]: Perlu validasi
+                - generic "Klik kartu untuk ganti" [ref=e122]: Ganti ↻
+            - generic [ref=e123]: Properti incaran
+            - generic [ref=e126]:
+              - generic [ref=e127]: 3 temuan perlu diperhatikan
+              - generic [ref=e128]: 68/100
+        - generic [ref=e129]: Contoh visual · data ilustratif untuk prototype
+    - generic [ref=e131]:
+      - generic [ref=e132]:
+        - generic [ref=e133]: Cara kerja
+        - heading "Dari rumah incaran menjadi keputusan yang lebih yakin." [level=2] [ref=e135]
+        - paragraph [ref=e136]: Rumper membantu Anda bergerak dari alamat → bukti → pemahaman → tindakan, tanpa harus mengerti GIS atau membaca dataset mentah.
+      - generic [ref=e137]:
+        - 'button "Langkah 1: Cari lokasi" [pressed] [ref=e138] [cursor=pointer]':
+          - text: "01"
+          - heading "Cari" [level=3] [ref=e139]
+          - paragraph [ref=e140]: Masukkan nama perumahan atau alamat yang sedang Anda pertimbangkan.
+          - generic [ref=e142]:
+            - generic [ref=e143]: ⌂
+            - generic [ref=e144]: Grand Galaxy CityBekasi Selatan
+        - 'button "Langkah 2: Periksa faktor lokasi" [ref=e145] [cursor=pointer]':
+          - text: "02"
+          - heading "Periksa" [level=3] [ref=e146]
+          - paragraph [ref=e147]: Rumper membaca beberapa faktor lokasi yang relevan di sekitar properti.
+          - generic [ref=e148]:
+            - generic [ref=e151]: Banjir
+            - generic [ref=e152]: Akses
+            - generic [ref=e153]: Lingkungan
+        - 'button "Langkah 3: Pahami temuan" [ref=e154] [cursor=pointer]':
+          - text: "03"
+          - heading "Pahami" [level=3] [ref=e155]
+          - paragraph [ref=e156]: Temuan diterjemahkan ke bahasa sederhana, bukan istilah teknis yang membingungkan.
+          - generic [ref=e157]: ⚠ Potensi genangan
+        - 'button "Langkah 4: Putuskan tindakan" [ref=e161] [cursor=pointer]':
+          - text: "04"
+          - heading "Putuskan" [level=3] [ref=e162]
+          - paragraph [ref=e163]: Tahu apa yang perlu dicek lagi, dinegosiasikan, atau dianggap sebagai red flag.
+          - generic [ref=e164]:
+            - generic [ref=e165]: ✓ Cek setelah hujan
+            - generic [ref=e166]: ✓ Validasi akses sore
+            - generic [ref=e167]: ✓ Tanyakan riwayat warga
+    - generic [ref=e170]:
+      - generic [ref=e171]:
+        - generic [ref=e172]: Eksplorasi Risiko
+        - heading "Apa yang perlu dicek sebelum keluar uang?" [level=2] [ref=e173]
+      - tablist "Kategori risiko" [ref=e174]:
+        - tab "Banjir" [ref=e175] [cursor=pointer]
+        - tab "Lingkungan" [ref=e176] [cursor=pointer]
+        - tab "Akses" [ref=e177] [cursor=pointer]
+        - tab "Sekitar" [ref=e178] [cursor=pointer]
+      - generic [ref=e179]:
+        - generic [ref=e180]:
+          - generic [ref=e181]: Risiko banjir
+          - heading "Ada potensi genangan di akses utama." [level=3] [ref=e182]
+          - paragraph [ref=e183]: Rumper membantu menunjukkan temuan yang perlu Anda validasi di lapangan sebelum membuat komitmen finansial.
+          - link "Lihat bukti lokasi →" [ref=e184] [cursor=pointer]:
+            - /url: "#transparansi"
+            - text: Lihat bukti lokasi
+            - generic [ref=e185]: →
+        - generic [ref=e192]:
+          - generic [ref=e193]:
+            - strong [ref=e194]: Area terdekat
+            - text: dari gerbang utama
+          - generic [ref=e195]: ±120 m
+    - generic [ref=e198]:
+      - generic [ref=e199]:
+        - generic [ref=e200]: Bukan map explorer
+        - heading "Yang Anda butuhkan bukan lebih banyak data. Tapi keputusan yang lebih jelas." [level=2] [ref=e201]
+      - paragraph [ref=e202]: Rumper dirancang untuk pembeli rumah non-expert. Temuan lokasi disederhanakan menjadi apa yang perlu diketahui, kenapa itu penting, dan apa yang sebaiknya dilakukan berikutnya.
+    - generic [ref=e204]:
+      - generic [ref=e205]:
+        - generic [ref=e206]: Analisis Risiko
+        - heading "Yang tidak selalu terlihat saat survei rumah." [level=2] [ref=e208]
+        - paragraph [ref=e209]: Klik kategori untuk melihat bagaimana Rumper mengubah data lokasi menjadi konteks yang lebih mudah dipahami.
+        - generic [ref=e210]:
+          - button "Risiko bencana ↗ Potensi banjir, kedekatan terhadap faktor risiko, dan riwayat kejadian yang relevan." [ref=e211] [cursor=pointer]:
+            - generic [ref=e212]:
+              - generic [ref=e213]: Risiko bencana
+              - generic [ref=e214]: ↗
+            - paragraph [ref=e215]: Potensi banjir, kedekatan terhadap faktor risiko, dan riwayat kejadian yang relevan.
+          - button "Kondisi lingkungan ↗ Kualitas udara, kebisingan, dan potensi gangguan lingkungan di sekitar properti." [ref=e216] [cursor=pointer]:
+            - generic [ref=e217]:
+              - generic [ref=e218]: Kondisi lingkungan
+              - generic [ref=e219]: ↗
+            - paragraph: Kualitas udara, kebisingan, dan potensi gangguan lingkungan di sekitar properti.
+          - button "Akses & mobilitas ↗ Kondisi akses kendaraan, kemudahan keluar-masuk, dan faktor mobilitas yang perlu divalidasi." [ref=e220] [cursor=pointer]:
+            - generic [ref=e221]:
+              - generic [ref=e222]: Akses & mobilitas
+              - generic [ref=e223]: ↗
+            - paragraph: Kondisi akses kendaraan, kemudahan keluar-masuk, dan faktor mobilitas yang perlu divalidasi.
+          - button "Kelayakan sekitar ↗ Akses ke fasilitas dan indikator sekitar yang membantu menilai kenyamanan tinggal." [ref=e224] [cursor=pointer]:
+            - generic [ref=e225]:
+              - generic [ref=e226]: Kelayakan sekitar
+              - generic [ref=e227]: ↗
+            - paragraph: Akses ke fasilitas dan indikator sekitar yang membantu menilai kenyamanan tinggal.
+      - generic [ref=e228]:
+        - generic [ref=e233]: Rumper
+        - generic [ref=e234]: Banjir
+        - generic [ref=e235]: Gempa
+        - generic [ref=e236]: Riwayat
+        - generic [ref=e237]: Drainase
+    - region "End to End Feature Carousel" [ref=e238]:
+      - generic [ref=e240]:
+        - generic [ref=e241]: Langkah demi Langkah
+        - heading "Dari cek lokasi hingga serah terima kunci." [level=2] [ref=e243]
+        - paragraph [ref=e244]: Semua yang Anda butuhkan untuk membuat keputusan yang tepat, tanpa keraguan.
+      - generic [ref=e245]:
+        - generic [ref=e246]:
+          - generic [ref=e247]:
+            - img "Rumah modern dengan halaman hijau yang sedang dipertimbangkan pembeli" [ref=e248]
+            - generic [ref=e249]: Mulai dari rumah yang Anda incar
+            - link "Foto rumah oleh Jonathan Borba di Unsplash" [ref=e250] [cursor=pointer]:
+              - /url: https://unsplash.com/photos/6sDuV840wxs
+              - text: Unsplash · Jonathan Borba
+          - heading "1. Cari Lokasi" [level=3] [ref=e251]
+          - paragraph [ref=e252]: Masukkan alamat atau pin point lokasi rumah yang ingin Anda beli. Rumper akan memulai pencarian data.
+        - generic [ref=e253] [cursor=pointer]:
+          - generic [ref=e254]:
+            - img "Jalan lingkungan perumahan yang tergenang setelah hujan" [ref=e255]
+            - generic [ref=e256]: Risiko akses sering baru terlihat setelah hujan
+            - link "Foto jalan tergenang oleh yusrizal iskadi di Unsplash" [ref=e257]:
+              - /url: https://unsplash.com/photos/W-snX25xw3s
+              - text: Unsplash · yusrizal iskadi
+          - heading "2. Analisis AI" [level=3] [ref=e258]
+          - paragraph [ref=e259]: Mesin analitik kami memindai 40+ titik data termasuk riwayat banjir, kriminalitas, dan zona industri.
+        - generic [ref=e260] [cursor=pointer]:
+          - generic [ref=e261]: 94/100
+          - heading "3. Laporan Komprehensif" [level=3] [ref=e263]
+          - paragraph [ref=e264]: Dapatkan laporan lengkap dan skor risiko dalam hitungan detik. Keputusan properti bukan lagi tebak-tebakan.
+        - generic [ref=e265] [cursor=pointer]:
+          - generic [ref=e266]:
+            - img "Pasangan menerima kunci rumah baru mereka" [ref=e267]
+            - generic [ref=e268]: Keputusan akhir dengan konteks yang lebih lengkap
+            - link "Foto pasangan oleh Vitaly Gariev di Unsplash" [ref=e269]:
+              - /url: https://unsplash.com/photos/x8l4lN6-xd0
+              - text: Unsplash · Vitaly Gariev
+          - heading "4. Keputusan Mantap" [level=3] [ref=e270]
+          - paragraph [ref=e271]: Beli rumah dengan pikiran tenang. Anda tahu persis apa yang Anda beli dan lingkungan sekitarnya.
+    - generic [ref=e273]:
+      - generic [ref=e274]:
+        - generic [ref=e275]: Contoh laporan
+        - heading "Bukan cuma skor. Tunjukkan apa artinya." [level=2] [ref=e277]
+        - paragraph [ref=e278]: Contoh di bawah adalah ilustrasi UI prototype, bukan hasil audit nyata.
+      - generic [ref=e279]:
+        - generic [ref=e280]: Properti incaran
+        - generic [ref=e285]:
+          - generic [ref=e286]: Risiko sedang · perlu validasi
+          - heading "Grand Galaxy City" [level=3] [ref=e287]
+          - paragraph [ref=e288]: Bekasi Selatan · contoh prototype
+          - generic [ref=e289]:
+            - generic [ref=e290]: ⚠ Potensi genangan akses utama
+            - paragraph [ref=e291]: Ada indikasi area yang sebaiknya dicek langsung setelah hujan sebelum booking.
+          - generic [ref=e292]:
+            - generic [ref=e293]: ✓ Tidak ada temuan besar pada faktor listrik tegangan tinggi
+            - paragraph [ref=e294]: Tetap validasi secara visual saat survei lapangan.
+          - generic [ref=e295]:
+            - generic [ref=e296]: ◉ Akses kendaraan perlu dicek saat jam sibuk
+            - paragraph [ref=e297]: Perhatikan titik penyempitan dan pola keluar-masuk kendaraan.
+          - link "Coba dengan lokasi Anda →" [ref=e299] [cursor=pointer]:
+            - /url: "#cek"
+            - text: Coba dengan lokasi Anda
+            - generic [ref=e300]: →
+    - generic [ref=e302]:
+      - generic [ref=e303]:
+        - generic [ref=e304]: Bandingkan
+        - heading "Masih pilih antara dua rumah?" [level=2] [ref=e306]
+        - paragraph [ref=e307]: Bandingkan faktor lokasi secara berdampingan sebelum menentukan mana yang layak dikunjungi lebih dulu.
+      - generic [ref=e308]:
+        - generic [ref=e309]:
+          - generic [ref=e310]: Lokasi A
+          - heading "Grand Galaxy City" [level=3] [ref=e311]
+          - paragraph [ref=e312]: Bekasi Selatan
+          - generic [ref=e313]:
+            - generic [ref=e314]: Risiko banjir
+            - generic [ref=e315]: Sedang
+          - generic [ref=e316]:
+            - generic [ref=e317]: Akses
+            - generic [ref=e318]: Baik
+          - generic [ref=e319]:
+            - generic [ref=e320]: Lingkungan
+            - generic [ref=e321]: Baik
+        - generic [ref=e322]:
+          - generic [ref=e323]: Lokasi B
+          - heading "Kota Wisata" [level=3] [ref=e324]
+          - paragraph [ref=e325]: Cibubur
+          - generic [ref=e326]:
+            - generic [ref=e327]: Risiko banjir
+            - generic [ref=e328]: Rendah
+          - generic [ref=e329]:
+            - generic [ref=e330]: Akses
+            - generic [ref=e331]: Perlu cek
+          - generic [ref=e332]:
+            - generic [ref=e333]: Lingkungan
+            - generic [ref=e334]: Baik
+    - generic [ref=e336]:
+      - generic [ref=e337]:
+        - generic [ref=e338]: Transparansi
+        - heading "Bukan angka aja. Lihat sumber dan batasannya." [level=2] [ref=e340]
+        - paragraph [ref=e341]: Setiap temuan seharusnya bisa ditelusuri kembali ke sumber, recency, dan konteks agar Anda tahu seberapa jauh hasil bisa dipercaya.
+      - generic [ref=e342]:
+        - generic [ref=e343]:
+          - generic [ref=e344]: ⌁
+          - heading "Sumber" [level=3] [ref=e345]
+          - paragraph [ref=e346]: Tampilkan asal data publik atau dataset yang dipakai pada setiap temuan, bukan sekadar skor akhir.
+          - generic [ref=e347]: Contoh UI · sumber aktual mengikuti implementasi
+        - generic [ref=e348]:
+          - generic [ref=e349]: ◷
+          - heading "Recency" [level=3] [ref=e350]
+          - paragraph [ref=e351]: Berikan tanggal pembaruan agar pembeli tahu apakah informasi masih relevan untuk keputusan saat ini.
+          - generic [ref=e352]: Terakhir diperbarui · ditampilkan per faktor
+        - generic [ref=e353]:
+          - generic [ref=e354]: i
+          - heading "Batasan" [level=3] [ref=e355]
+          - paragraph [ref=e356]: Jelaskan apa yang belum bisa dipastikan dan mana yang tetap harus divalidasi melalui survei lapangan.
+          - generic [ref=e357]: Transparansi lebih penting daripada kepastian palsu
+    - generic [ref=e359]:
+      - generic [ref=e360]:
+        - generic [ref=e361]: Harga
+        - heading "Pilih sesuai fase pencarian rumah Anda." [level=2] [ref=e363]
+        - paragraph [ref=e364]: Mulai dari satu pengecekan, lalu naik ke paket pencarian aktif ketika Anda membandingkan beberapa properti.
+      - generic [ref=e365]:
+        - generic [ref=e366]:
+          - heading "Cek Awal" [level=3] [ref=e367]
+          - paragraph [ref=e368]: Untuk melihat apakah lokasi layak diperiksa lebih lanjut.
+          - generic [ref=e369]: Rp0
+          - list [ref=e370]:
+            - listitem [ref=e371]: ✓ 1 pengecekan lokasi
+            - listitem [ref=e372]: ✓ Peringatan keselamatan utama
+            - listitem [ref=e373]: ✓ Ringkasan faktor lokasi
+          - link "Mulai gratis" [ref=e374] [cursor=pointer]:
+            - /url: "#cek"
+        - generic [ref=e375]:
+          - generic [ref=e376]: Untuk 1 properti
+          - heading "Laporan Lengkap" [level=3] [ref=e377]
+          - paragraph [ref=e378]: Untuk properti yang sudah masuk shortlist serius.
+          - generic [ref=e379]: Rp49.000
+          - list [ref=e380]:
+            - listitem [ref=e381]: ✓ Laporan bukti lebih dalam
+            - listitem [ref=e382]: ✓ Panduan validasi lapangan
+            - listitem [ref=e383]: ✓ Checklist pasca-kunjungan
+          - link "Cek lokasi lengkap" [ref=e384] [cursor=pointer]:
+            - /url: "#cek"
+        - generic [ref=e385]:
+          - heading "Akses 30 Hari" [level=3] [ref=e386]
+          - paragraph [ref=e387]: Untuk masa pencarian aktif dan perbandingan beberapa rumah.
+          - generic [ref=e388]: Rp129.000 / 30 hari
+          - list [ref=e389]:
+            - listitem [ref=e390]: ✓ Hingga 5 properti
+            - listitem [ref=e391]: ✓ Perbandingan lokasi
+            - listitem [ref=e392]: ✓ Multi-commute & matriks perbandingan
+          - link "Pilih pass" [ref=e393] [cursor=pointer]:
+            - /url: "#cek"
+    - generic [ref=e395]:
+      - generic [ref=e396]:
+        - generic [ref=e397]: FAQ
+        - heading "Pertanyaan sebelum mulai." [level=2] [ref=e399]
+      - generic [ref=e400]:
+        - generic [ref=e401]:
+          - button "Apakah Rumper menggantikan survei langsung?" [expanded] [ref=e402] [cursor=pointer]:
+            - text: Apakah Rumper menggantikan survei langsung?
+            - generic [aria-hidden] [ref=e403]: −
+          - generic [ref=e404]: Tidak. Rumper membantu Anda menemukan hal yang perlu diperhatikan lebih awal. Temuan tertentu tetap harus divalidasi di lapangan sebelum mengambil keputusan.
+        - generic [ref=e405]:
+          - button "Wilayah mana yang tersedia?" [ref=e406] [cursor=pointer]:
+            - text: Wilayah mana yang tersedia?
+            - generic [aria-hidden] [ref=e407]: +
+          - generic: Prototype ini mengikuti scope awal Jabodetabek. Cakupan aktual nantinya bergantung pada ketersediaan data per domain.
+        - generic [ref=e408]:
+          - button "Apakah Rumper menyediakan listing atau valuasi rumah?" [ref=e409] [cursor=pointer]:
+            - text: Apakah Rumper menyediakan listing atau valuasi rumah?
+            - generic [aria-hidden] [ref=e410]: +
+          - generic: Tidak. Fokus Rumper adalah location risk intelligence dan konteks keputusan, bukan listing, valuasi, atau transaksi properti.
+        - generic [ref=e411]:
+          - button "Kenapa sumber dan tanggal data penting?" [ref=e412] [cursor=pointer]:
+            - text: Kenapa sumber dan tanggal data penting?
+            - generic [aria-hidden] [ref=e413]: +
+          - generic: Karena kualitas keputusan bergantung pada transparansi. Pengguna perlu tahu dari mana temuan berasal, kapan diperbarui, dan batasan apa yang masih ada.
+    - generic [ref=e416]:
+      - generic [ref=e417]: Mulai dari rumah incaran Anda
+      - heading "Jangan baru tahu setelah bayar DP." [level=2] [ref=e418]
+      - paragraph [ref=e419]: Masukkan lokasi yang sedang Anda pertimbangkan dan mulai dari pengecekan sederhana sebelum komitmen finansial berikutnya.
+      - generic [ref=e420]:
+        - textbox "Alamat atau nama perumahan" [ref=e424]:
+          - /placeholder: Masukkan nama perumahan atau alamat...
+        - button "Cek Lokasi →" [ref=e425] [cursor=pointer]:
+          - text: Cek Lokasi
+          - generic [ref=e426]: →
+  - contentinfo [ref=e427]:
+    - generic [ref=e428]:
+      - generic [ref=e429]: © 2026 Rumper · Prototype landing page
+      - generic [ref=e430]: Jabodetabek · Location risk intelligence for homebuyers

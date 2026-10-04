@@ -1,31 +1,32 @@
-# Local environment and secrets
 .env
-.env.*
-!.env.example
-
-# Node.js / Next.js
+**/.env
+# Vite local env overrides (may hold keys) — keep .env.example tracked
+**/.env.local
+**/.env.*.local
 node_modules/
-.next/
-.vercel/
-.vercel-cli-config/
-out/
+__pycache__/
+.venv/
 dist/
-coverage/
 *.tsbuildinfo
-
-# Logs and editor files
-*.log
 .DS_Store
-.idea/
-.vscode/
-.superpowers/
+**/.DS_Store
 
-# Customer and order data
-operations/orders/customer-data/
-operations/orders/exports/
-operations/reports/generated/
-operations/reports/customer-reports/
+backend/static/
 
-# Private research working files
-data/private/
-data/raw/
+# Agent/GSD system files
+.agents/
+AGENTS.md
+skills-lock.json
+
+# Project starter documentation
+project-starter-docs/
+
+# Git Worktrees
+.worktrees
+.worktrees/
+worktrees
+worktrees/
+
+# Root scratch scripts
+/*.py
+

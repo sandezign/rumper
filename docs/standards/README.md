@@ -5,4 +5,5 @@ Standar lintas product dan operations yang menjadi sumber acuan untuk governance
 ## Standards
 
 - [STD-RPT-001: Standar Sistem Template Report Rumper](./report-template-system-standard.md)
+- [STD-CNT-001: Standar Product Knowledge, Voice, dan Terminologi Rumper](./STD-CNT-001-product-voice-and-terminology.md)
 

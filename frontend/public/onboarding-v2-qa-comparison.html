@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Onboarding V2 QA comparison</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body { margin: 0; width: 780px; height: 844px; overflow: hidden; background: #dfe5e3; }
+      main { display: grid; grid-template-columns: 390px 390px; width: 780px; height: 844px; }
+      figure { position: relative; margin: 0; width: 390px; height: 844px; overflow: hidden; background: white; }
+      figure + figure { border-left: 2px solid #001e2b; }
+      img { display: block; width: 390px; height: 844px; object-fit: fill; }
+      figcaption { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); z-index: 2; padding: 4px 9px; border-radius: 999px; background: rgba(0, 30, 43, .82); color: white; font: 700 10px/1 system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <figure><figcaption>Source</figcaption><img src="/onboarding-v2-source.png" alt="Selected visual direction" /></figure>
+      <figure><figcaption>Implementation</figcaption><img src="/onboarding-v2-implementation.png" alt="Browser implementation" /></figure>
+    </main>
+  </body>
+</html>
