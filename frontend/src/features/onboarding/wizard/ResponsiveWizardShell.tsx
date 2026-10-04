@@ -83,9 +83,9 @@ export default function ResponsiveWizardShell({
                   {flowStage === 1
                     ? "Langkah 1 · Kendala Utamamu"
                     : flowStage === 2
-                      ? "Langkah 2 · Uji Prioritas Hunian"
+                      ? "Langkah 2 · Pengantar Simulasi"
                       : flowStage >= 3 && flowStage <= 5
-                        ? `Langkah 2 · Uji 3 Skenario Nyata (${flowStage - 2}/3)`
+                        ? `Langkah 2 · Skenario ${flowStage - 2} dari 3`
                         : `Langkah 3 · Profiling & Budget (${parameterStep}/4)`}
                 </span>
                 <span className="text-xs font-semibold text-[#5C6C7A] tabular-nums">

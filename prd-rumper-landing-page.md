@@ -178,6 +178,13 @@ To maximize trust and conversion, the landing page is structured in this specifi
 3. **No Placeholders / Custom Visualizers:** Recreate spatial diagrams, roads, heatmaps, and charts using pure React SVG / CSS styling instead of static images.
 4. **Micro-animations:** Hover transitions on card boxes, pulse rings around warning markers, and clean CSS progress loaders to elevate interactivity.
 
+### V3 experimental implementation boundary (2026-09-26)
+
+- **Route:** `/v3` is an isolated, unauthenticated landing-page experiment. It must not replace `/`, `/v2`, or `/v2-alt` while it is under review.
+- **Content:** Preserve the Section 1–10 sequence and the established Indonesian messaging. V3 may consolidate repeated card presentation, but must not add unsupported product claims, pricing, audiences, or readiness promises.
+- **Interaction thesis:** Motion must reveal or compare location evidence (for example, flood, commute, and access signals). Decorative looping animation is secondary. All nonessential movement must respect `prefers-reduced-motion`.
+- **Validation:** Evaluate comprehension of the evidence scanner and the onboarding-search CTA before promoting V3 to a primary route.
+
 ---
 
 ## 7. Success Metrics & Validation

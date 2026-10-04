@@ -36,6 +36,8 @@
   --brand-teal-deep: var(--rumper-teal-950);
   --brand-teal: var(--rumper-teal-800);
   --brand-teal-mid: var(--rumper-teal-600);
+  --brand: var(--brand-green);
+  --brand-foreground: var(--brand-teal-deep);
 
   /* --- Semantic: surfaces --- */
   --surface-canvas: var(--rumper-white);
@@ -229,6 +231,8 @@
   --color-brand-teal-deep: var(--brand-teal-deep);
   --color-brand-teal: var(--brand-teal);
   --color-brand-teal-mid: var(--brand-teal-mid);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
 
   --color-text-secondary: var(--text-secondary);
   --color-text-tertiary: var(--text-tertiary);

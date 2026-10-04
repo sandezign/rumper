@@ -31,11 +31,11 @@ const TAHAP: Record<StepId, { n: string; title: string; lead?: string; Icon: typ
   },
   checklist: {
     n: "04", title: "Contekan Investigasi Lapangan", Icon: ClipboardCheck,
-    lead: "Hal-hal yang wajib kamu cek sendiri sebelum bayar booking fee atau DP.",
+    lead: "Hal-hal yang wajib Anda verifikasi langsung sebelum bayar booking fee atau DP.",
   },
   fasilitas: {
     n: "05", title: "Fasilitas Terdekat & POI", Icon: MapPin,
-    lead: "Fasilitas harian dalam radius ±3 km, dari warehouse OSM.",
+    lead: "Fasilitas harian dalam radius ±3 km, dari peta fasilitas sekitar (OpenStreetMap).",
   },
 };
 

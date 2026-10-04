@@ -88,22 +88,30 @@ const SCENARIO_1_DATA: ScenarioData = {
       "Waktu perjalanan harian 2.5 – 3 jam pulang-pergi (siap capek di jalan).",
   },
   feedbackMap: {
-    A: "✓ Prioritas dicatat: Anti boncos waktu komut (Siap dengan ruang kompak).",
-    B: "✓ Prioritas dicatat: Ruang lega & nyaman (Siap komut lebih panjang).",
+    A: "✓ Prioritas dicatat: Efisiensi waktu komuter (Siap dengan ruang kompak).",
+    B: "✓ Prioritas dicatat: Ruang lega & nyaman (Siap waktu komuter lebih panjang).",
     neither:
-      "✓ Preferensi: Mau jalan tengah antara luas dan waktu tempuh moderat.",
+      "✓ Preferensi: Mau jalan tengah antara luas bangunan dan waktu tempuh moderat.",
     reject:
-      "⚠️ Toleransi komut: Ketat (Akan memfilter perumahan dengan akses komuter buruk).",
+      "⚠️ Toleransi komuter: Ketat (Akan memfilter perumahan dengan akses komuter buruk).",
   },
 }
 
 export default function Stage2ValueProof() {
-  const { formData, setScenarioResponse, skipToParameterSetup } =
-    useWizardState()
+  const {
+    formData,
+    setScenarioResponse,
+    clearScenarioResponse,
+    skipToParameterSetup,
+  } = useWizardState()
   const currentChoice = formData.scenarioResponses["transit-vs-space"]
 
   const handleSelect = (choice: ScenarioChoice) => {
     setScenarioResponse("transit-vs-space", choice)
+  }
+
+  const handleClear = () => {
+    clearScenarioResponse("transit-vs-space")
   }
 
   return (
@@ -112,6 +120,7 @@ export default function Stage2ValueProof() {
       selectedChoice={currentChoice}
       selectedFriction={formData.selectedFriction}
       onSelectChoice={handleSelect}
+      onClearChoice={handleClear}
       onSkip={skipToParameterSetup}
     />
   )

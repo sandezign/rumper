@@ -100,6 +100,7 @@ export default function AreasHubV2() {
   const navigate = useNavigate();
   const [loaderDone, setLoaderDone] = useState(false);
   const [data, setData] = useState<AreasResponse | null>(null);
+  const [profileError, setProfileError] = useState<string | null>(null);
   const [view, setView] = useState<View>("peta");
   const [shortlist, setShortlist] = useState<Set<string>>(() => getShortlist());
   const [reports] = useState<Record<string, string>>(() => getReports());
@@ -120,37 +121,37 @@ export default function AreasHubV2() {
   const [search, setSearch] = useState("");
 
   const profile = loadProfile();
-  const anchorLabel = profile?.anchors.find((a) => a.type === "primary")?.label ?? "Sudirman, Jakarta Pusat";
+  const anchor = profile?.anchors.find((a) => a.type === "primary");
+  const anchorLabel = anchor?.label;
 
   useEffect(() => {
+    if (!profile || profile.status !== "confirmed" || !anchorLabel || !anchor?.placeId || !profile.commuteToleranceMinutes) {
+      setProfileError("Lengkapi tujuan aktivitas dan batas komuter sebelum melihat area.");
+      return;
+    }
     let cancelled = false;
     (async () => {
       try {
         const hits = await placesAutocomplete(anchorLabel).catch(() => []);
-        const geo = await geocodePlace(hits[0]?.description ?? anchorLabel).catch(() => ({
-          lat: -6.215,
-          lng: 106.82,
-        }));
+        const selected = hits.find((hit) => hit.place_id === anchor.placeId);
+        const geo = await geocodePlace(selected?.description ?? anchorLabel);
         const res = await fetchAreas({
           anchorLat: geo.lat,
           anchorLng: geo.lng,
           anchorLabel: shortAnchorLabel(anchorLabel),
-          toleranceMin: 60,
+          toleranceMin: profile.commuteToleranceMinutes,
           dealbreakers: profile?.signals?.selectedFriction === "flood-access" ? ["flood_safety"] : [],
-        }).catch(() => mockAreasResponseFromInitial());
+        });
 
         if (cancelled) return;
-        setData(res || mockAreasResponseFromInitial());
-        setActiveId(res?.areas[0]?.id ?? "area-bintaro");
+        setData(res);
+        setActiveId(res.areas[0]?.id ?? null);
       } catch {
-        if (!cancelled) {
-          setData(mockAreasResponseFromInitial());
-          setActiveId("area-bintaro");
-        }
+        if (!cancelled) setProfileError("Area belum dapat dimuat. Periksa tujuan aktivitasmu lalu coba lagi.");
       }
     })();
     return () => { cancelled = true; };
-  }, [anchorLabel, profile?.signals?.selectedFriction]);
+  }, [anchor?.placeId, anchorLabel, profile?.commuteToleranceMinutes, profile?.signals?.selectedFriction, profile?.status]);
 
   useEffect(() => {
     let cancelled = false;
@@ -220,6 +221,17 @@ export default function AreasHubV2() {
         userFriction={profile?.signals?.selectedFrictionLabel}
         onComplete={() => setLoaderDone(true)}
       />
+    );
+  }
+
+  if (profileError) {
+    return (
+      <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center gap-5 px-6 text-center">
+        <MapPin className="mx-auto text-[#00684A]" size={36} aria-hidden="true" />
+        <h1 className="text-2xl font-black text-[#001E2B]">Preferensi belum siap</h1>
+        <p className="text-sm leading-relaxed text-[#5C6C7A]">{profileError}</p>
+        <button type="button" onClick={() => navigate("/v2/onboarding")} className="min-h-12 rounded-full bg-[#00ED64] px-5 font-extrabold text-[#001E2B]">Lengkapi preferensi</button>
+      </main>
     );
   }
 

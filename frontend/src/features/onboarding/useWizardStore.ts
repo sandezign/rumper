@@ -56,9 +56,22 @@ const FIRST_PARAM_STAGE = 6; // stages 1..5 are narrative; 6 hosts parameter ste
 const LAST_PARAM_STEP = 4;
 
 function formDataFromProfile(p: BuyerPriorityProfile | null): WizardFormData {
-  if (!p) return initialWizardData;
+  let searchCorridor = "";
+  try {
+    searchCorridor = new URLSearchParams(window.location.search).get("q")?.trim() ?? "";
+  } catch {}
+  if (!p) {
+    return {
+      ...initialWizardData,
+      selectedCorridors: searchCorridor ? [searchCorridor] : [],
+    };
+  }
   const primary = p.anchors.find((a) => a.type === "primary");
   const secondary = p.anchors.find((a) => a.type === "secondary");
+  const corridors = [...p.preferredCorridors];
+  if (searchCorridor && !corridors.includes(searchCorridor)) {
+    corridors.unshift(searchCorridor);
+  }
   return {
     ...initialWizardData,
     householdType: p.householdType,
@@ -69,7 +82,7 @@ function formDataFromProfile(p: BuyerPriorityProfile | null): WizardFormData {
     secondAnchorPlaceId: secondary?.placeId,
     budgetMin: p.budget.minMillions,
     budgetMax: p.budget.maxMillions,
-    selectedCorridors: p.preferredCorridors,
+    selectedCorridors: corridors,
     selectedFriction: p.signals?.selectedFriction,
     selectedFrictionLabel: p.signals?.selectedFrictionLabel,
     scenarioResponses: p.signals?.scenarioResponses ?? {},
@@ -101,6 +114,14 @@ export function useWizardState() {
       ...prev,
       scenarioResponses: { ...prev.scenarioResponses, [scenarioId]: choice },
     }));
+  }, []);
+
+  const clearScenarioResponse = useCallback((scenarioId: string) => {
+    setFormData((prev) => {
+      const nextResponses = { ...prev.scenarioResponses };
+      delete nextResponses[scenarioId];
+      return { ...prev, scenarioResponses: nextResponses };
+    });
   }, []);
 
   const toggleCorridor = useCallback((corridor: string) => {
@@ -160,6 +181,7 @@ export function useWizardState() {
     isCompleted,
     updateFormData,
     setScenarioResponse,
+    clearScenarioResponse,
     toggleCorridor,
     nextStage,
     prevStage,

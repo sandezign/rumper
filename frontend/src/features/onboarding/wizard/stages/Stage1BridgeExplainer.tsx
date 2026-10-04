@@ -128,7 +128,7 @@ export default function Stage1BridgeExplainer({
         >
           <button
             type="button"
-            aria-label="Faktor Kesiapan Lingkungan & Bebas Banjir"
+            aria-label="Faktor Ketahanan Banjir & Elevasi Tanah"
             className="w-10 h-10 rounded-full bg-feature-mint shadow-sm border border-soft-green flex items-center justify-center animate-orbit-pop animate-float-3 transition-[transform,background-color,border-color,box-shadow] duration-200 group-hover:scale-120 group-hover:bg-canvas-white group-hover:border-rumper-green-dark group-hover:shadow-md cursor-pointer active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-deep-teal focus-visible:outline-offset-2"
           >
             <img
@@ -139,7 +139,7 @@ export default function Stage1BridgeExplainer({
             />
           </button>
           <div className="absolute -top-7 left-1/2 -translate-x-1/2 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 group-hover:-translate-y-1 transition-[transform,opacity] duration-200 ease-out pointer-events-none bg-deep-teal text-canvas-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-md whitespace-nowrap z-30">
-            Bebas Banjir
+            Ketahanan Banjir
           </div>
         </div>
 
@@ -253,18 +253,18 @@ export default function Stage1BridgeExplainer({
         </p>
       </div>
 
-      {/* Clean Checklist Items (Concentric rounded-2xl with active:scale-[0.96]) */}
-      <div className="w-full max-w-lg flex flex-col gap-3.5 text-left mb-4">
+      {/* Clean Checklist Items (Informational cards without false click affordance) */}
+      <div className="w-full max-w-lg flex flex-col gap-3 text-left mb-4">
         {/* Item 1 */}
-        <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-canvas-white border border-hairline shadow-2xs transition-[border-color,box-shadow,transform] duration-200 hover:border-soft-green hover:shadow-xs hover:-translate-y-0.5 active:scale-[0.96] cursor-pointer group">
+        <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-canvas-white border border-hairline shadow-2xs">
           <div
             aria-hidden="true"
-            className="w-6 h-6 rounded-full bg-rumper-green-dark text-canvas-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs transition-transform duration-200 group-hover:scale-110"
+            className="w-6 h-6 rounded-full bg-rumper-green-dark text-canvas-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs"
           >
             <Check size={14} className="stroke-[3]" />
           </div>
           <div className="space-y-0.5">
-            <h3 className="text-sm font-bold text-deep-teal group-hover:text-rumper-green-dark transition-colors duration-200">
+            <h3 className="text-sm font-bold text-deep-teal">
               Waktu Komuter vs Luas Bangunan
             </h3>
             <p className="text-sm text-tertiary-ink leading-relaxed text-pretty">
@@ -275,34 +275,34 @@ export default function Stage1BridgeExplainer({
         </div>
 
         {/* Item 2 */}
-        <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-canvas-white border border-hairline shadow-2xs transition-[border-color,box-shadow,transform] duration-200 hover:border-soft-green hover:shadow-xs hover:-translate-y-0.5 active:scale-[0.96] cursor-pointer group">
+        <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-canvas-white border border-hairline shadow-2xs">
           <div
             aria-hidden="true"
-            className="w-6 h-6 rounded-full bg-rumper-green-dark text-canvas-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs transition-transform duration-200 group-hover:scale-110"
+            className="w-6 h-6 rounded-full bg-rumper-green-dark text-canvas-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs"
           >
             <Check size={14} className="stroke-[3]" />
           </div>
           <div className="space-y-0.5">
-            <h3 className="text-sm font-bold text-deep-teal group-hover:text-rumper-green-dark transition-colors duration-200">
-              Kesiapan Lingkungan & Bebas Banjir
+            <h3 className="text-sm font-bold text-deep-teal">
+              Ketahanan Banjir & Elevasi Tanah
             </h3>
             <p className="text-sm text-tertiary-ink leading-relaxed text-pretty">
-              Bandingkan rasa tenang bebas genangan saat musim hujan vs
+              Bandingkan rasa tenang di dataran tinggi bebas genangan vs
               kedekatan ke pusat kota.
             </p>
           </div>
         </div>
 
         {/* Item 3 */}
-        <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-canvas-white border border-hairline shadow-2xs transition-[border-color,box-shadow,transform] duration-200 hover:border-soft-green hover:shadow-xs hover:-translate-y-0.5 active:scale-[0.96] cursor-pointer group">
+        <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-canvas-white border border-hairline shadow-2xs">
           <div
             aria-hidden="true"
-            className="w-6 h-6 rounded-full bg-rumper-green-dark text-canvas-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs transition-transform duration-200 group-hover:scale-110"
+            className="w-6 h-6 rounded-full bg-rumper-green-dark text-canvas-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs"
           >
             <Check size={14} className="stroke-[3]" />
           </div>
           <div className="space-y-0.5">
-            <h3 className="text-sm font-bold text-deep-teal group-hover:text-rumper-green-dark transition-colors duration-200">
+            <h3 className="text-sm font-bold text-deep-teal">
               Cicilan Riil vs Biaya Operasional
             </h3>
             <p className="text-sm text-tertiary-ink leading-relaxed text-pretty">

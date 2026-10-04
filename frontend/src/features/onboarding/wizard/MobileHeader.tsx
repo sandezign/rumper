@@ -19,7 +19,7 @@ export default function MobileHeader({
 
   const getStageLabel = () => {
     if (flowStage === 1) return "Langkah 1 · Kendala"
-    if (flowStage === 2) return "Langkah 2 · Prioritas"
+    if (flowStage === 2) return "Langkah 2 · Pengantar"
     if (flowStage >= 3 && flowStage <= 5)
       return `Langkah 2 · Skenario ${flowStage - 2}/3`
     return `Langkah 3 · Profil ${parameterStep}/4`

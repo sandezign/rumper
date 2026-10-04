@@ -5,7 +5,6 @@ import "./index.css";
 import { ThemeProvider } from "./components/theme-provider";
 import { TooltipProvider } from "./components/ui/tooltip";
 import AuthPage from "./components/AuthPage";
-import Landing from "./components/Landing";
 import LocationHome from "./components/LocationHome";
 import Onboarding from "./components/Onboarding";
 import OnboardingWizard from "./pages/OnboardingWizard";
@@ -24,6 +23,10 @@ import OnboardingWizardV2 from "./pages/v2/OnboardingWizardV2";
 import AreasHubV2 from "./pages/v2/AreasHubV2";
 import LocationWorkspaceV2 from "./pages/v2/LocationWorkspaceV2";
 import LandingV2 from "./pages/v2/LandingV2";
+import LandingV3 from "./pages/v3/LandingV3";
+import TermsPage from "./pages/legal/TermsPage";
+import PrivacyPage from "./pages/legal/PrivacyPage";
+import SecurityPage from "./pages/legal/SecurityPage";
 
 /** `/cek/:id` -> `/check/:id`, preserving the id (docs/09 §Route convention). */
 function LegacyCheckRedirect() {
@@ -37,7 +40,7 @@ createRoot(document.getElementById("root")!).render(
       <TooltipProvider delayDuration={200}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Landing />} />
+            <Route path="/" element={<LandingV2 />} />
             {/* URLs are English (docs/09 §Route convention); on-screen copy stays id-ID. */}
             <Route path="/login" element={<GuestOnly><AuthPage mode="login" /></GuestOnly>} />
             <Route path="/register" element={<GuestOnly><AuthPage mode="register" /></GuestOnly>} />
@@ -53,6 +56,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/app/c/:threadId" element={<RequireAuth><LocationWorkspace /></RequireAuth>} />
             {/* V2 isolated end-to-end journey */}
             <Route path="/v2" element={<LandingV2 />} />
+            <Route path="/v3" element={<LandingV3 />} />
             <Route path="/v2/start" element={<OnboardingWizardV2 />} />
             <Route path="/v2/onboarding" element={<OnboardingWizardV2 />} />
             <Route path="/v2/areas" element={<AreasHubV2 />} />
@@ -60,12 +64,24 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/v2/workspace/:threadId" element={<LocationWorkspaceV2 />} />
             <Route path="/v2/c/:threadId" element={<LocationWorkspaceV2 />} />
 
+            {/* Legal & Trust Hub */}
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/security" element={<SecurityPage />} />
+            <Route path="/legal/terms" element={<Navigate to="/terms" replace />} />
+            <Route path="/legal/privacy" element={<Navigate to="/privacy" replace />} />
+            <Route path="/legal/security" element={<Navigate to="/security" replace />} />
+            <Route path="/legal" element={<Navigate to="/terms" replace />} />
+
             {/* operations fallback: classic form + report view */}
             <Route path="/form" element={<Intake />} />
             <Route path="/check/:id" element={<Check />} />
             {/* legacy id-ID URLs — permanent redirects so shared links keep working */}
             <Route path="/masuk" element={<Navigate to="/login" replace />} />
             <Route path="/daftar" element={<Navigate to="/register" replace />} />
+            <Route path="/syarat" element={<Navigate to="/terms" replace />} />
+            <Route path="/privasi" element={<Navigate to="/privacy" replace />} />
+            <Route path="/keamanan" element={<Navigate to="/security" replace />} />
             <Route path="/app/mulai" element={<Navigate to="/app/start" replace />} />
             <Route path="/app/akun" element={<Navigate to="/app/account" replace />} />
             <Route path="/cek/:id" element={<LegacyCheckRedirect />} />

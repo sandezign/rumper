@@ -46,6 +46,9 @@ export interface BuyerPriorityProfile {
   householdType: HouseholdType;
   workPattern: WorkPattern;
   anchors: { label: string; type: "primary" | "secondary"; placeId?: string }[];
+  /** Buyer-stated one-way commute threshold. This is passed to the areas API; it is not
+   * an estimate of any route. */
+  commuteToleranceMinutes?: number;
   budget: { minMillions: number; maxMillions: number };
   preferredCorridors: string[];
   signals: ProfileSignals;

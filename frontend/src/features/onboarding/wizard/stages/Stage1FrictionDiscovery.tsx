@@ -16,17 +16,17 @@ interface Stage1Props {
 const FRICTION_OPTIONS = [
   {
     id: "flood-access",
-    label: "Takut drama banjir & jalan akses tergenang pas puncak musim hujan",
+    label: "Khawatir risiko banjir musiman & jalan akses tergenang saat musim hujan",
     icon: floodIcon,
   },
   {
     id: "commute-discrepancy",
-    label: "Waktu komut riil meleset jauh dari klaim manis brosur marketing",
+    label: "Waktu perjalanan komuter meleset jauh dari klaim manis brosur penjualan",
     icon: commuteIcon,
   },
   {
     id: "tradeoff-confusion",
-    label: "Pusing bandingin trade-off lokasi antara puluhan opsi rumah",
+    label: "Pusing menimbang kompromi lokasi di antara puluhan opsi rumah",
     icon: compareIcon,
   },
   {
@@ -43,7 +43,7 @@ const FRICTION_OPTIONS = [
   {
     id: "budget-kpr",
     label:
-      "Takut boncos di cicilan KPR dan biaya tak terduga pas udah nempatin",
+      "Khawatir cicilan KPR dan biaya tak terduga menguras tabungan keluarga",
     icon: budgetIcon,
   },
   {

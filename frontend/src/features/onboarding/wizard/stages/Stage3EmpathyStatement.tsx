@@ -11,7 +11,7 @@ const SCENARIO_2_DATA: ScenarioData = {
   totalScenarios: 3,
   weatherTag: "Februari • Puncak Musim Hujan Jabodetabek",
   weatherIcon: ShieldCheck,
-  title: "Topografi Bebas Banjir vs Desain Rumah Estetik",
+  title: "Ketahanan Banjir Alami vs Desain Rumah Estetik di Lembah",
   narrative:
     "Curah hujan ekstrem mengguyur Jabodetabek selama 3 hari beruntun. Beberapa titik cekungan jalan arteri tergenang 40 cm, bikin ratusan warga perumahan lembah terjebak macet berjam-jam.",
   whyItMatters:
@@ -24,12 +24,12 @@ const SCENARIO_2_DATA: ScenarioData = {
     price: "Rp 980 Juta",
     imageUrl:
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
-    imageTag: "⛰️ Elevasi +48m dpl · Drainase Gravitasi",
+    imageTag: "⛰️ Dataran Tinggi (+48 mdpl) · Drainase Alami",
     metrics: [
       {
         label: "RISIKO GENANGAN",
         value: "Nol Riwayat",
-        subValue: "Elevasi aman 48m dpl",
+        subValue: "Posisi tanah tinggi & aman",
       },
       {
         label: "DRAINASE",
@@ -47,7 +47,7 @@ const SCENARIO_2_DATA: ScenarioData = {
         subValue: "Jalan bebas genangan",
       },
     ],
-    akses: "Elevasi 48m dpl, kontur tanah berbukit, jalan bebas genangan",
+    akses: "Kawasan berbukit (±48 mdpl), air mengalir lancar, jalan bebas genangan",
     fasilitas: "Drainase gravitasi alami mengalir lancar ke lembah",
     kompromiNyata:
       "Fasad standar bawaan developer, ada kontur tanjakan menuju rumah.",
@@ -89,21 +89,29 @@ const SCENARIO_2_DATA: ScenarioData = {
       "Jalan akses utama di luar gerbang cluster rawan tergenang pas hujan ekstrem.",
   },
   feedbackMap: {
-    A: "✓ Prioritas dicatat: Keamanan topografi & anti-banjir alami (Siap fasad standar).",
+    A: "✓ Prioritas dicatat: Ketahanan banjir alami & posisi tanah tinggi (Siap fasad standar).",
     B: "✓ Prioritas dicatat: Estetika bangunan & fasilitas mewah (Siap risiko tanggul/akses).",
-    neither: "✓ Preferensi: Mau hunian di elevasi aman dengan desain modern.",
+    neither: "✓ Preferensi: Mau hunian di posisi tanah aman dengan desain modern.",
     reject:
       "⚠️ Toleransi banjir: Nol mutlak (Blacklist seluruh zona cekungan air).",
   },
 }
 
 export default function Stage3EmpathyStatement() {
-  const { formData, setScenarioResponse, skipToParameterSetup } =
-    useWizardState()
+  const {
+    formData,
+    setScenarioResponse,
+    clearScenarioResponse,
+    skipToParameterSetup,
+  } = useWizardState()
   const currentChoice = formData.scenarioResponses["flood-vs-aesthetic"]
 
   const handleSelect = (choice: ScenarioChoice) => {
     setScenarioResponse("flood-vs-aesthetic", choice)
+  }
+
+  const handleClear = () => {
+    clearScenarioResponse("flood-vs-aesthetic")
   }
 
   return (
@@ -112,6 +120,7 @@ export default function Stage3EmpathyStatement() {
       selectedChoice={currentChoice}
       selectedFriction={formData.selectedFriction}
       onSelectChoice={handleSelect}
+      onClearChoice={handleClear}
       onSkip={skipToParameterSetup}
     />
   )

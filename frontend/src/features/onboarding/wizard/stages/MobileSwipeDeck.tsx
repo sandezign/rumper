@@ -17,6 +17,7 @@ interface MobileSwipeDeckProps {
   selectedChoice?: ScenarioChoice
   selectedFriction?: string
   onSelectChoice: (choice: ScenarioChoice) => void
+  onClearChoice?: () => void
   onSkip?: () => void
 }
 
@@ -25,6 +26,7 @@ export default function MobileSwipeDeck({
   selectedChoice,
   selectedFriction,
   onSelectChoice,
+  onClearChoice,
   onSkip,
 }: MobileSwipeDeckProps) {
   const [activeTab, setActiveTab] = useState<"A" | "B">("A")
@@ -363,24 +365,48 @@ export default function MobileSwipeDeck({
 
           {/* 4 Metric Boxes Grid */}
           <div className="grid grid-cols-2 gap-2 mt-3">
-            {activeHouse.metrics.map((m, idx) => (
-              <div
-                key={idx}
-                className="bg-[#F4F7F6] rounded-xl p-2 border border-[#E1E5E8]"
-              >
-                <div className="text-[10px] font-bold uppercase tracking-wider text-[#5C6C7A]">
-                  {m.label}
-                </div>
-                <div className="text-xs font-extrabold text-[#001E2B] mt-0.5 tabular-nums">
-                  {m.value}
-                </div>
-                {m.subValue && (
-                  <div className="text-[10px] text-[#5C6C7A] font-medium truncate">
-                    {m.subValue}
+            {activeHouse.metrics.map((m, idx) => {
+              const isPrimary = idx < 2
+              return (
+                <div
+                  key={idx}
+                  className={`rounded-xl p-2 border transition-colors ${
+                    isPrimary
+                      ? "bg-[#EBF5F0]/70 border-[#318266]/35"
+                      : "bg-[#F4F7F6] border-[#E1E5E8]"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span
+                      className={`text-[10px] font-bold uppercase tracking-wider ${
+                        isPrimary ? "text-[#004F38]" : "text-[#5C6C7A]"
+                      }`}
+                    >
+                      {m.label}
+                    </span>
+                    {isPrimary && (
+                      <span className="text-[9px] font-extrabold uppercase px-1 rounded-full bg-[#DCEEE7] text-[#004F38]">
+                        Kunci
+                      </span>
+                    )}
                   </div>
-                )}
-              </div>
-            ))}
+                  <div
+                    className={`mt-0.5 tabular-nums font-extrabold ${
+                      isPrimary
+                        ? "text-xs min-[380px]:text-sm text-[#004F38]"
+                        : "text-xs text-[#001E2B]"
+                    }`}
+                  >
+                    {m.value}
+                  </div>
+                  {m.subValue && (
+                    <div className="text-[10px] text-[#5C6C7A] font-medium truncate mt-0.5">
+                      {m.subValue}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
 
           {/* Compact Bullets */}
@@ -503,7 +529,7 @@ export default function MobileSwipeDeck({
             <span className="truncate text-[11px]">Moderat</span>
           </button>
 
-          {/* Hard No */}
+          {/* Batasan Mutlak */}
           <button
             type="button"
             onClick={() => onSelectChoice("reject")}
@@ -515,7 +541,7 @@ export default function MobileSwipeDeck({
             }`}
           >
             <AlertTriangle size={14} aria-hidden="true" />
-            <span className="truncate text-[11px]">Hard No</span>
+            <span className="truncate text-[11px]">Batasan Mutlak</span>
           </button>
         </div>
 
@@ -527,7 +553,13 @@ export default function MobileSwipeDeck({
             </span>
             <button
               type="button"
-              onClick={() => onSelectChoice("neither")}
+              onClick={() => {
+                if (onClearChoice) {
+                  onClearChoice()
+                } else {
+                  onSelectChoice("neither")
+                }
+              }}
               className="text-[#5C6C7A] hover:text-[#001E2B] flex items-center gap-1 font-bold shrink-0 ml-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#001E2B] rounded-md px-1"
             >
               <RotateCcw size={11} aria-hidden="true" />

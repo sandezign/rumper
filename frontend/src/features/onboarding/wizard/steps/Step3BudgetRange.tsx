@@ -53,8 +53,7 @@ export default function Step3BudgetRange({
           Batas Anggaran & Cicilan KPR
         </h2>
         <p className="text-sm md:text-base text-[#5C6C7A] mt-1">
-          Biar dompet tetap napas, pasang rentang harga yang realistis sesuai
-          kapasitas cicilanmu.
+          Tentukan rentang harga yang realistis agar beban cicilan bulanan tetap aman bagi keuanganmu.
         </p>
       </div>
 

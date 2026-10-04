@@ -98,12 +98,20 @@ const SCENARIO_3_DATA: ScenarioData = {
 }
 
 export default function Stage4Comparison() {
-  const { formData, setScenarioResponse, skipToParameterSetup } =
-    useWizardState()
+  const {
+    formData,
+    setScenarioResponse,
+    clearScenarioResponse,
+    skipToParameterSetup,
+  } = useWizardState()
   const currentChoice = formData.scenarioResponses["established-vs-quiet"]
 
   const handleSelect = (choice: ScenarioChoice) => {
     setScenarioResponse("established-vs-quiet", choice)
+  }
+
+  const handleClear = () => {
+    clearScenarioResponse("established-vs-quiet")
   }
 
   return (
@@ -112,6 +120,7 @@ export default function Stage4Comparison() {
       selectedChoice={currentChoice}
       selectedFriction={formData.selectedFriction}
       onSelectChoice={handleSelect}
+      onClearChoice={handleClear}
       onSkip={skipToParameterSetup}
     />
   )

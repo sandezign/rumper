@@ -194,7 +194,7 @@ export const initialCuratedAreas: CuratedArea[] = [
       { x: 55, y: 38 },
     ],
     summaryNarrative:
-      "Memberikan luas tanah dan bangunan tertinggi per rupiah (Rp 7,5 Jt/m²) dengan elevasi alami bebas banjir 62 mdpl.",
+      "Memberikan luas tanah dan bangunan tertinggi per rupiah (Rp 7,5 Jt/m²) dengan elevasi alami 62 mdpl (risiko genangan rendah).",
     cocokReason:
       "Rasio luas tanah per rupiah tertinggi di selatan Jakarta, kontur tanah tinggi bebas genangan, dan akses tol Desari.",
     tradeoffReason:

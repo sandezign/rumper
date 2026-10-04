@@ -6,6 +6,7 @@ import {
   XCircle,
   Info,
   Sparkles,
+  RotateCcw,
 } from "lucide-react"
 import type { ScenarioChoice } from "@/features/onboarding/useWizardStore"
 import MobileSwipeDeck from "./MobileSwipeDeck"
@@ -49,6 +50,7 @@ interface ScenarioViewProps {
   selectedChoice?: ScenarioChoice
   selectedFriction?: string
   onSelectChoice: (choice: ScenarioChoice) => void
+  onClearChoice?: () => void
   onSkip?: () => void
 }
 
@@ -57,6 +59,7 @@ export default function ScenarioView({
   selectedChoice,
   selectedFriction,
   onSelectChoice,
+  onClearChoice,
   onSkip,
 }: ScenarioViewProps) {
   const [showWhyModal, setShowWhyModal] = useState(false)
@@ -71,6 +74,7 @@ export default function ScenarioView({
           selectedChoice={selectedChoice}
           selectedFriction={selectedFriction}
           onSelectChoice={onSelectChoice}
+          onClearChoice={onClearChoice}
           onSkip={onSkip}
         />
       </div>
@@ -224,26 +228,50 @@ export default function ScenarioView({
               </div>
             )}
 
-            {/* 4 Metric Boxes Grid */}
-            <div className="grid grid-cols-2 gap-2">
-              {data.optionA.metrics.map((m, idx) => (
-                <div
-                  key={idx}
-                  className="bg-[#F4F7F6] rounded-xl p-2.5 border border-[#E1E5E8]"
-                >
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-[#5C6C7A]">
-                    {m.label}
-                  </div>
-                  <div className="text-xs md:text-sm font-extrabold text-[#001E2B] mt-0.5 tabular-nums">
-                    {m.value}
-                  </div>
-                  {m.subValue && (
-                    <div className="text-[10px] text-[#5C6C7A] font-medium truncate">
-                      {m.subValue}
+            {/* 4 Metric Boxes Grid - Differentiating Core Conflict vs Secondary Specs */}
+            <div className="grid grid-cols-2 gap-2.5">
+              {data.optionA.metrics.map((m, idx) => {
+                const isPrimary = idx < 2
+                return (
+                  <div
+                    key={idx}
+                    className={`rounded-xl p-2.5 border transition-colors ${
+                      isPrimary
+                        ? "bg-[#EBF5F0]/70 border-[#318266]/35"
+                        : "bg-[#F4F7F6] border-[#E1E5E8]"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span
+                        className={`text-[10px] font-bold uppercase tracking-wider ${
+                          isPrimary ? "text-[#004F38]" : "text-[#5C6C7A]"
+                        }`}
+                      >
+                        {m.label}
+                      </span>
+                      {isPrimary && (
+                        <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-[#DCEEE7] text-[#004F38]">
+                          Kunci
+                        </span>
+                      )}
                     </div>
-                  )}
-                </div>
-              ))}
+                    <div
+                      className={`mt-0.5 tabular-nums font-extrabold ${
+                        isPrimary
+                          ? "text-sm md:text-base text-[#004F38]"
+                          : "text-xs md:text-sm text-[#001E2B]"
+                      }`}
+                    >
+                      {m.value}
+                    </div>
+                    {m.subValue && (
+                      <div className="text-[10px] text-[#5C6C7A] font-medium truncate mt-0.5">
+                        {m.subValue}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
             </div>
 
             {/* Bullets */}
@@ -266,15 +294,15 @@ export default function ScenarioView({
               </span>
             </div>
 
-            {/* Active Select Indicator */}
+            {/* Primary Selection Target Indicator */}
             {selectedChoice === "A" ? (
-              <div className="flex items-center gap-1.5 text-xs font-bold text-white bg-[#001E2B] py-2 px-3 rounded-full justify-center shadow-xs animate-fadeIn">
-                <Check size={14} className="stroke-[3] text-[#00ED64]" aria-hidden="true" />
-                <span>Pilihanmu (Rumah A Terpilih)</span>
+              <div className="flex items-center gap-2 text-xs font-bold text-white bg-[#001E2B] py-2.5 px-4 rounded-2xl justify-center shadow-xs animate-fadeIn">
+                <Check size={16} className="stroke-[3] text-[#00ED64]" aria-hidden="true" />
+                <span>Pilihanmu · Rumah A Terpilih</span>
               </div>
             ) : (
-              <div className="text-center text-xs font-bold text-[#5C6C7A] py-1.5">
-                Klik untuk memilih Rumah A
+              <div className="w-full text-center text-xs font-bold text-[#001E2B] bg-[#F4F7F6] hover:bg-[#EAEFEA] border border-[#D7E1E5] hover:border-[#001E2B]/40 py-2.5 px-4 rounded-2xl transition-colors">
+                Pilih Rumah A
               </div>
             )}
           </div>
@@ -294,8 +322,8 @@ export default function ScenarioView({
             }}
             className={`bg-white rounded-3xl p-5 md:p-6 border-2 transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-4 relative select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#001E2B] focus-visible:ring-offset-2 ${
               selectedChoice === "B"
-                ? "border-[#001E2B] shadow-md bg-[#F9FBFA]"
-                : "border-[#D7E1E5] hover:border-[#A8B8C6] shadow-xs hover:shadow-md"
+                ? "border-[#001E2B] shadow-lg ring-4 ring-[#001E2B]/5 bg-[#F9FBFA]"
+                : "border-[#D7E1E5] hover:border-[#001E2B]/40 shadow-xs hover:shadow-md"
             }`}
           >
             {/* Header & Price */}
@@ -349,26 +377,50 @@ export default function ScenarioView({
               </div>
             )}
 
-            {/* 4 Metric Boxes Grid */}
-            <div className="grid grid-cols-2 gap-2">
-              {data.optionB.metrics.map((m, idx) => (
-                <div
-                  key={idx}
-                  className="bg-[#F4F7F6] rounded-xl p-2.5 border border-[#E1E5E8]"
-                >
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-[#5C6C7A]">
-                    {m.label}
-                  </div>
-                  <div className="text-xs md:text-sm font-extrabold text-[#001E2B] mt-0.5 tabular-nums">
-                    {m.value}
-                  </div>
-                  {m.subValue && (
-                    <div className="text-[10px] text-[#5C6C7A] font-medium truncate">
-                      {m.subValue}
+            {/* 4 Metric Boxes Grid - Differentiating Core Conflict vs Secondary Specs */}
+            <div className="grid grid-cols-2 gap-2.5">
+              {data.optionB.metrics.map((m, idx) => {
+                const isPrimary = idx < 2
+                return (
+                  <div
+                    key={idx}
+                    className={`rounded-xl p-2.5 border transition-colors ${
+                      isPrimary
+                        ? "bg-[#EBF5F0]/70 border-[#318266]/35"
+                        : "bg-[#F4F7F6] border-[#E1E5E8]"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span
+                        className={`text-[10px] font-bold uppercase tracking-wider ${
+                          isPrimary ? "text-[#004F38]" : "text-[#5C6C7A]"
+                        }`}
+                      >
+                        {m.label}
+                      </span>
+                      {isPrimary && (
+                        <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-[#DCEEE7] text-[#004F38]">
+                          Kunci
+                        </span>
+                      )}
                     </div>
-                  )}
-                </div>
-              ))}
+                    <div
+                      className={`mt-0.5 tabular-nums font-extrabold ${
+                        isPrimary
+                          ? "text-sm md:text-base text-[#004F38]"
+                          : "text-xs md:text-sm text-[#001E2B]"
+                      }`}
+                    >
+                      {m.value}
+                    </div>
+                    {m.subValue && (
+                      <div className="text-[10px] text-[#5C6C7A] font-medium truncate mt-0.5">
+                        {m.subValue}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
             </div>
 
             {/* Bullets */}
@@ -391,124 +443,112 @@ export default function ScenarioView({
               </span>
             </div>
 
-            {/* Active Select Indicator */}
+            {/* Primary Selection Target Indicator */}
             {selectedChoice === "B" ? (
-              <div className="flex items-center gap-1.5 text-xs font-bold text-white bg-[#001E2B] py-2 px-3 rounded-full justify-center shadow-xs animate-fadeIn">
-                <Check size={14} className="stroke-[3] text-[#00ED64]" aria-hidden="true" />
-                <span>Pilihanmu (Rumah B Terpilih)</span>
+              <div className="flex items-center gap-2 text-xs font-bold text-white bg-[#001E2B] py-2.5 px-4 rounded-2xl justify-center shadow-xs animate-fadeIn">
+                <Check size={16} className="stroke-[3] text-[#00ED64]" aria-hidden="true" />
+                <span>Pilihanmu · Rumah B Terpilih</span>
               </div>
             ) : (
-              <div className="text-center text-xs font-bold text-[#5C6C7A] py-1.5">
-                Klik untuk memilih Rumah B
+              <div className="w-full text-center text-xs font-bold text-[#001E2B] bg-[#F4F7F6] hover:bg-[#EAEFEA] border border-[#D7E1E5] hover:border-[#001E2B]/40 py-2.5 px-4 rounded-2xl transition-colors">
+                Pilih Rumah B
               </div>
             )}
           </div>
         </div>
 
-        {/* Decision Toolbar Component - Stable 4-Option Grid */}
-        <div className="bg-white rounded-3xl p-5 md:p-6 border border-[#D7E1E5] shadow-sm space-y-3.5">
+        {/* Alternative Non-Binary Choices Toolbar (Simplified to 2 options) */}
+        <div className="bg-white rounded-3xl p-5 md:p-6 border border-[#D7E1E5] shadow-xs space-y-3.5">
           <div className="flex items-center justify-between">
             <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#5C6C7A]">
-              Kompromi yang Paling Masuk Akal Buat Kamu:
+              Atau pertimbangkan opsi alternatif di luar kedua rumah di atas:
             </h3>
           </div>
 
-          {/* Stable 4-Column Option Grid (2 Columns on mobile, 4 Columns on desktop) */}
+          {/* 2-Column Alternative Choices Grid */}
           <div
-            className="grid grid-cols-2 md:grid-cols-4 gap-2.5 items-stretch"
+            className="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch"
             role="group"
-            aria-label="Pilihan Kompromi"
+            aria-label="Pilihan Alternatif"
           >
-            {/* Option 1: Pilih Rumah A */}
-            <button
-              type="button"
-              onClick={() => onSelectChoice("A")}
-              aria-pressed={selectedChoice === "A"}
-              className={`min-h-[48px] px-3.5 py-2.5 rounded-2xl text-xs md:text-sm font-bold border transition-all cursor-pointer flex items-center justify-center gap-2 select-none active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#001E2B] focus-visible:ring-offset-2 ${
-                selectedChoice === "A"
-                  ? "border-2 border-[#001E2B] bg-[#001E2B]/5 text-[#001E2B] ring-2 ring-[#001E2B]/10 shadow-xs"
-                  : "border border-[#D7E1E5] bg-white text-[#001E2B] hover:border-[#001E2B] hover:bg-[#F4F7F6]"
-              }`}
-            >
-              <Check
-                size={16}
-                aria-hidden="true"
-                className={
-                  selectedChoice === "A"
-                    ? "text-[#00684A] stroke-[3]"
-                    : "text-[#5C6C7A]"
-                }
-              />
-              <span className="truncate">Pilih Rumah A</span>
-            </button>
-
-            {/* Option 2: Pilih Rumah B */}
-            <button
-              type="button"
-              onClick={() => onSelectChoice("B")}
-              aria-pressed={selectedChoice === "B"}
-              className={`min-h-[48px] px-3.5 py-2.5 rounded-2xl text-xs md:text-sm font-bold border transition-all cursor-pointer flex items-center justify-center gap-2 select-none active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#001E2B] focus-visible:ring-offset-2 ${
-                selectedChoice === "B"
-                  ? "border-2 border-[#001E2B] bg-[#001E2B]/5 text-[#001E2B] ring-2 ring-[#001E2B]/10 shadow-xs"
-                  : "border border-[#D7E1E5] bg-white text-[#001E2B] hover:border-[#001E2B] hover:bg-[#F4F7F6]"
-              }`}
-            >
-              <Check
-                size={16}
-                aria-hidden="true"
-                className={
-                  selectedChoice === "B"
-                    ? "text-[#00684A] stroke-[3]"
-                    : "text-[#5C6C7A]"
-                }
-              />
-              <span className="truncate">Pilih Rumah B</span>
-            </button>
-
-            {/* Option 3: Kompromi Moderat */}
+            {/* Option 1: Kompromi Moderat */}
             <button
               type="button"
               onClick={() => onSelectChoice("neither")}
               aria-pressed={selectedChoice === "neither"}
-              className={`min-h-[48px] px-3.5 py-2.5 rounded-2xl text-xs md:text-sm font-bold border transition-all cursor-pointer flex items-center justify-center gap-2 select-none active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#001E2B] focus-visible:ring-offset-2 ${
+              className={`min-h-[52px] px-4 py-3 rounded-2xl text-xs md:text-sm font-bold border transition-all cursor-pointer flex items-center gap-3 select-none active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#001E2B] focus-visible:ring-offset-2 ${
                 selectedChoice === "neither"
                   ? "border-2 border-[#001E2B] bg-[#001E2B]/5 text-[#001E2B] ring-2 ring-[#001E2B]/10 shadow-xs"
-                  : "border border-[#D7E1E5] bg-white text-[#5C6C7A] hover:border-[#C1CCD6] hover:bg-[#F4F7F6]"
+                  : "border border-[#D7E1E5] bg-white text-[#3D4F5B] hover:border-[#001E2B]/40 hover:bg-[#F4F7F6]"
               }`}
             >
-              <XCircle
-                size={16}
-                aria-hidden="true"
-                className={
-                  selectedChoice === "neither"
-                    ? "text-[#001E2B]"
-                    : "text-[#5C6C7A]"
-                }
-              />
-              <span className="truncate">Kompromi Moderat</span>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                selectedChoice === "neither" ? "bg-[#001E2B] text-white" : "bg-[#F4F7F6] text-[#5C6C7A]"
+              }`}>
+                <XCircle size={18} aria-hidden="true" />
+              </div>
+              <div className="text-left">
+                <span className="block font-bold text-xs md:text-sm text-[#001E2B]">
+                  Kompromi Moderat
+                </span>
+                <span className="block text-[11px] font-normal text-[#5C6C7A]">
+                  Mau jalan tengah seimbang di antara keduanya
+                </span>
+              </div>
             </button>
 
-            {/* Option 4: Hard No (Tolak Skenario) */}
+            {/* Option 2: Batasan Mutlak (Dealbreaker) */}
             <button
               type="button"
               onClick={() => onSelectChoice("reject")}
               aria-pressed={selectedChoice === "reject"}
-              className={`min-h-[48px] px-3.5 py-2.5 rounded-2xl text-xs md:text-sm font-bold border transition-all cursor-pointer flex items-center justify-center gap-2 select-none active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C95746] focus-visible:ring-offset-2 ${
+              className={`min-h-[52px] px-4 py-3 rounded-2xl text-xs md:text-sm font-bold border transition-all cursor-pointer flex items-center gap-3 select-none active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C95746] focus-visible:ring-offset-2 ${
                 selectedChoice === "reject"
                   ? "border-2 border-[#C95746] bg-[#FFF5F5] text-[#C95746] ring-2 ring-[#C95746]/10 shadow-xs"
-                  : "border border-[#F4DED9] bg-white text-[#C95746] hover:border-[#C95746] hover:bg-[#FFF5F5]"
+                  : "border border-[#F4DED9] bg-white text-[#A8382B] hover:border-[#C95746] hover:bg-[#FFF5F5]"
               }`}
             >
-              <AlertTriangle size={16} aria-hidden="true" />
-              <span className="truncate">Hard No (Tolak)</span>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                selectedChoice === "reject" ? "bg-[#C95746] text-white" : "bg-[#FFF5F5] text-[#C95746]"
+              }`}>
+                <AlertTriangle size={18} aria-hidden="true" />
+              </div>
+              <div className="text-left">
+                <span className="block font-bold text-xs md:text-sm text-[#A8382B]">
+                  Batasan Mutlak (Dealbreaker)
+                </span>
+                <span className="block text-[11px] font-normal text-[#7A3E35]">
+                  Coret & filter perumahan yang melanggar faktor ini
+                </span>
+              </div>
             </button>
           </div>
 
           {/* Dynamic Outline Feedback Banner */}
           {selectedChoice && data.feedbackMap[selectedChoice] && (
-            <div role="status" aria-live="polite" className="pt-2 flex items-center gap-2 text-xs font-semibold text-[#004F38] bg-[#E9F5EF] px-4 py-2.5 rounded-xl border border-[#318266]/30 animate-fadeIn">
-              <Check size={14} className="stroke-[3] text-[#00684A] shrink-0" aria-hidden="true" />
-              <span>{data.feedbackMap[selectedChoice]}</span>
+            <div
+              role="status"
+              aria-live="polite"
+              className="pt-2 flex items-center justify-between gap-3 text-xs font-semibold text-[#004F38] bg-[#E9F5EF] px-4 py-2.5 rounded-xl border border-[#318266]/30 animate-fadeIn"
+            >
+              <div className="flex items-center gap-2">
+                <Check
+                  size={14}
+                  className="stroke-[3] text-[#00684A] shrink-0"
+                  aria-hidden="true"
+                />
+                <span>{data.feedbackMap[selectedChoice]}</span>
+              </div>
+              {onClearChoice && (
+                <button
+                  type="button"
+                  onClick={onClearChoice}
+                  className="text-[#5C6C7A] hover:text-[#001E2B] flex items-center gap-1 font-bold text-xs underline shrink-0 cursor-pointer transition-colors"
+                >
+                  <RotateCcw size={12} aria-hidden="true" />
+                  <span>Ubah Pilihan</span>
+                </button>
+              )}
             </div>
           )}
         </div>

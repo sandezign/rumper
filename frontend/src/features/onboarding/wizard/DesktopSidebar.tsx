@@ -48,7 +48,7 @@ const PARAMETER_STEPS = [
 
 const SCENARIO_NAMES = [
   "Transit Cepat vs Luas Tanah",
-  "Keamanan Elevasi Banjir vs Desain Estetik",
+  "Ketahanan Banjir Alami vs Desain Estetik",
   "Lingkungan Established vs Cluster Hening",
 ]
 
@@ -63,10 +63,10 @@ export default function DesktopSidebar({
   const scenarioIndex = isScenarioStage ? flowStage - 3 : 0
 
   // Phase status helpers
-  const isPhase1Active = flowStage === 1 || flowStage === 2
-  const isPhase1Done = flowStage > 2
+  const isPhase1Active = flowStage === 1
+  const isPhase1Done = flowStage > 1
 
-  const isPhase2Active = flowStage >= 3 && flowStage <= 5
+  const isPhase2Active = flowStage >= 2 && flowStage <= 5
   const isPhase2Done = flowStage > 5
 
   const isPhase3Active = flowStage === 6
@@ -85,10 +85,10 @@ export default function DesktopSidebar({
           {flowStage === 2 && (
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#003D4F] text-[#00ED64] border border-[#003D4F]">
               <Sparkles size={14} className="shrink-0 text-[#00ED64]" />
-              <span>Langkah 2 · Uji Prioritas</span>
+              <span>Langkah 2 · Pengantar Simulasi</span>
             </div>
           )}
-          {isPhase2Active && (
+          {isScenarioStage && (
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#003D4F] text-[#00ED64] border border-[#003D4F]">
               <Sparkles size={14} className="shrink-0 text-[#00ED64]" />
               <span>Langkah 2 · Skenario {scenarioIndex + 1} dari 3</span>
@@ -120,7 +120,29 @@ export default function DesktopSidebar({
         </div>
 
         {/* Context Callout Box */}
-        {isPhase2Active ? (
+        {flowStage === 2 ? (
+          <div className="bg-[#003D4F]/60 rounded-2xl p-4 border border-[#003D4F] space-y-2">
+            <div className="flex items-center justify-between text-xs text-[#00ED64] font-bold">
+              <span>Pengantar Simulasi</span>
+              <span className="text-[11px] text-[#A8B3BC] font-medium">
+                Uji Trade-off
+              </span>
+            </div>
+            <p className="text-xs font-semibold text-white">
+              Pahami kompromi nyata di Jabodetabek sebelum simulasi 3 skenario.
+            </p>
+            {onSkipToSetup && (
+              <button
+                type="button"
+                onClick={onSkipToSetup}
+                className="w-full mt-2 pt-2 border-t border-[#002B38] text-[11px] font-bold text-[#A8B3BC] hover:text-[#00ED64] flex items-center justify-between transition-colors cursor-pointer"
+              >
+                <span>Lewati ke Detail Profil</span>
+                <ArrowRight size={13} />
+              </button>
+            )}
+          </div>
+        ) : isScenarioStage ? (
           <div className="bg-[#003D4F]/60 rounded-2xl p-4 border border-[#003D4F] space-y-2">
             <div className="flex items-center justify-between text-xs text-[#00ED64] font-bold">
               <span>Skenario {scenarioIndex + 1} dari 3</span>
@@ -216,7 +238,7 @@ export default function DesktopSidebar({
             />
             <button
               type="button"
-              onClick={() => onStageClick && isPhase1Done && onStageClick(3)}
+              onClick={() => onStageClick && isPhase1Done && onStageClick(flowStage === 2 ? 2 : 3)}
               className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 z-10 transition-all duration-300 ${
                 isPhase2Active
                   ? "bg-[#00ED64] text-[#001E2B] ring-4 ring-[#00ED64]/20 shadow-lg scale-105 font-bold"
@@ -241,18 +263,20 @@ export default function DesktopSidebar({
                       : "text-[#A8B3BC]"
                 }`}
               >
-                2. Uji 3 Skenario Nyata
+                2. Uji Prioritas Hunian
               </span>
               <span className="text-[11px] text-[#7C8C9A] font-medium">
-                {isPhase2Active
-                  ? `Skenario ${scenarioIndex + 1} dari 3`
-                  : isPhase2Done
-                    ? "3 skenario selesai"
-                    : "Uji kompromi & trade-off"}
+                {flowStage === 2
+                  ? "Pengantar simulasi"
+                  : isScenarioStage
+                    ? `Skenario ${scenarioIndex + 1} dari 3`
+                    : isPhase2Done
+                      ? "3 skenario selesai"
+                      : "Uji kompromi & trade-off"}
               </span>
 
-              {/* Sub-indicator pills for Phase 2 when active */}
-              {isPhase2Active && (
+              {/* Sub-indicator pills for Phase 2 when on scenario stages */}
+              {isScenarioStage && (
                 <div className="flex items-center gap-1.5 mt-2">
                   {[0, 1, 2].map((idx) => (
                     <button

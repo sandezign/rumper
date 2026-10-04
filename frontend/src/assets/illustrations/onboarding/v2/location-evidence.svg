@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 250" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Peta bukti lokasi Rumper</title><desc id="desc">Rumah dikelilingi indikator banjir, komuter, akses, fasilitas, dan lingkungan.</desc>
+  <defs><linearGradient id="g" x1="40" y1="20" x2="315" y2="235" gradientUnits="userSpaceOnUse"><stop stop-color="#E3FCEF"/><stop offset="1" stop-color="#E1F3FC"/></linearGradient></defs>
+  <circle cx="180" cy="125" r="112" fill="url(#g)"/><circle cx="180" cy="125" r="83" stroke="#9FE9BF" stroke-width="2" stroke-dasharray="4 7"/><circle cx="180" cy="125" r="55" fill="#fff" stroke="#00B545" stroke-width="3"/>
+  <path d="M151 129l29-25 29 25v32h-58z" fill="#00684A"/><path d="M174 161v-20h12v20" fill="#E3FCEF"/><circle cx="180" cy="125" r="44" stroke="#00ED64" stroke-width="8" opacity=".25"/>
+  <g fill="#fff" stroke-width="3"><circle cx="92" cy="82" r="25" stroke="#1687D8"/><circle cx="272" cy="88" r="25" stroke="#E8891B"/><circle cx="279" cy="169" r="25" stroke="#008C56"/><circle cx="91" cy="172" r="25" stroke="#D84646"/><circle cx="176" cy="213" r="25" stroke="#7647C7"/></g>
+  <path d="M92 66c-8 11-10 16 0 28 10-12 8-17 0-28zM260 79h24v17h-24zM270 167h18v16h-18zM81 169h21v8H81zM167 220c8-17 18-17 26 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+  <path d="M115 84l29 22M244 91l-28 22M250 161l-31-18M113 166l31-19M177 187v-26" stroke="#B5DCC8" stroke-width="2" stroke-dasharray="3 5"/>
+</svg>
